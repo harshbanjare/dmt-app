@@ -155,9 +155,10 @@ class _PickImagePageState extends State<PickImagePage> {
                 children: [
                   ElevatedButton(
                     style: style,
-                    onPressed: () {
+                    onPressed: () async {
                       // _getFromGallery();
-                      _getMultiImages();
+                      // _getMultiImages();
+                      await picker.pickMultiImage();
                     },
                     child: const Text('PICK FROM GALLERY'),
                   ),
