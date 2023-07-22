@@ -1,0 +1,116 @@
+name: dmt
+description: A new Flutter project.
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.6 <4.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_localization: ^0.1.13
+  fluttertoast: ^8.0.8
+  dotted_border: ^2.0.0+2
+  flutter_spinkit: ^5.1.0
+  page_transition: ^2.0.5
+  font_awesome_flutter: ^10.5.0
+  dotted_line: ^3.1.0
+  intl_phone_number_input: ^0.7.0+2
+  # carousel_pro: ^1.0.0
+  #  google_maps_flutter: ^2.1.1
+  flutter_slidable: ^3.0.0
+  calendar_timeline: ^1.0.4
+  url_launcher: ^6.0.20
+  image: ^4.0.17
+  #  scanbot_sdk: 2.8.1
+  #  cupertino_icons: ^1.0.2
+  permission_handler: ^10.0.0
+  image_picker: ^1.0.1
+  logging: ^1.0.0
+  shared_preferences: ^2.2.0
+  path_provider: ^2.0.0
+  flutter_cache_manager: ^3.0.2
+  uuid: ^3.0.0
+  crypto: ^3.0.0
+  archive: ^3.3.7
+  advance_pdf_viewer: 2.0.1
+  open_file: ^3.2.1
+  syncfusion_flutter_pdfviewer: ^22.1.39
+  file_picker: ^5.3.2
+  pdf_viewer_plugin: ^2.0.1
+  syncfusion_flutter_datepicker: ^22.1.39
+  webview_flutter: ^4.2.2
+  #  pdf_compressor: ^0.2.0
+  #  opencv_4: ^1.0.0
+  pdf: ^3.8.0
+  document_scanner_flutter: ^0.2.7
+  launch_review: ^3.0.1
+  #chat
+  socket_io_client: ^2.0.2
+  intl: ^0.18.0
+  dio: ^5.3.0
+  onesignal_flutter: ^3.3.0
+  flutter_easyloading: ^3.0.1
+  syncfusion_flutter_pdfviewer_web: ^19.4.56-beta
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/doctor/
+    - assets/icons/
+    - assets/lab/
+    - assets/user/
+    - assets/payment_icon/
+
+  fonts:
+    - family: Noto Sans
+      fonts:
+        - asset: fonts/noto_sans/NotoSans-Regular.ttf
+        - asset: fonts/noto_sans/NotoSans-Bold.ttf
+          weight: 500
+    - family: Pacifico
+      fonts:
+        - asset: fonts/pecifico/Pacifico-Regular.ttf
