@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Notifications extends StatefulWidget {
+  const Notifications({super.key});
+
   @override
   _NotificationsState createState() => _NotificationsState();
 }
@@ -32,18 +34,18 @@ class _NotificationsState extends State<Notifications> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: (notificationList.length == 0)
+      body: (notificationList.isEmpty)
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Icon(
+                  const Icon(
                     FontAwesomeIcons.bellSlash,
                     color: Colors.grey,
                     size: 60.0,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                   Text(
@@ -54,7 +56,7 @@ class _NotificationsState extends State<Notifications> {
               ),
             )
           : ListView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: notificationList.length,
               itemBuilder: (context, index) {
                 final item = notificationList[index];
@@ -106,15 +108,15 @@ class _NotificationsState extends State<Notifications> {
                         children: <Widget>[
                           Container(
                             alignment: Alignment.topLeft,
-                            padding: EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: CircleAvatar(
+                              radius: 40.0,
                               child: Icon(
                                 (item['type'] == 'booking')
                                     ? Icons.date_range
                                     : Icons.local_offer,
                                 size: 30.0,
                               ),
-                              radius: 40.0,
                             ),
                           ),
                           Expanded(
@@ -122,7 +124,7 @@ class _NotificationsState extends State<Notifications> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       top: 8.0, right: 8.0, left: 8.0),
                                   child: Text(
                                     '${item['title']}',
@@ -130,7 +132,7 @@ class _NotificationsState extends State<Notifications> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     '${item['desc']}',
                                     style: greySmallTextStyle,

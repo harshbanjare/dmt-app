@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dmt/constant/constant.dart';
-import 'package:dmt/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'final_comment.dart';
@@ -146,17 +144,17 @@ class _DoctorListState extends State<DoctorList> {
                                   '${item['name']}',
                                   style: blackNormalBoldTextStyle,
                                 ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 Text(
                                   widget.doctorType,
                                   style: greyNormalTextStyle,
                                 ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 // Text(
                                 //   '${item['exp']} Years Experience',
                                 //   style: primaryColorNormalTextStyle,
                                 // ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -196,9 +194,9 @@ class _DoctorListState extends State<DoctorList> {
                                 Navigator.push(
                                     context,
                                     PageTransition(
-                                        duration: Duration(milliseconds: 600),
+                                        duration: const Duration(milliseconds: 600),
                                         type: PageTransitionType.fade,
-                                        child: CamFinalCommentPage()));
+                                        child: const CamFinalCommentPage()));
                               } else if (index == 1) {
                                 Fluttertoast.showToast(
                                     msg: "Doctor List 2",

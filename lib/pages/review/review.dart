@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class Review extends StatefulWidget {
   final reviewList;
-  Review({Key? key, @required this.reviewList}) : super(key: key);
+  const Review({Key? key, @required this.reviewList}) : super(key: key);
   @override
   _ReviewState createState() => _ReviewState();
 }
@@ -90,12 +90,12 @@ class _ReviewState extends State<Review> {
                                 item['name'],
                                 style: blackNormalBoldTextStyle,
                               ),
-                              SizedBox(height: 5.0),
+                              const SizedBox(height: 5.0),
                               Text(
                                 item['time'],
                                 style: greySmallTextStyle,
                               ),
-                              SizedBox(height: 5.0),
+                              const SizedBox(height: 5.0),
                               ratingBar(item['rating']),
                             ],
                           ),

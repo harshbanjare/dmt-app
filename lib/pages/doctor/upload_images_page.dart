@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:logging/logging.dart';
-import 'package:dmt/camscanner/utils.dart';
 import 'package:dmt/constant/constant.dart';
 import 'package:dmt/pages/screens.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +46,7 @@ class _ImagesListState extends State<UploadImages> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // Image.file(File(_imageFile.path)),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
@@ -211,17 +208,17 @@ class _ImagesListState extends State<UploadImages> {
                                   '${item['name']}',
                                   style: blackNormalBoldTextStyle,
                                 ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 Text(
                                   widget.ImagesType,
                                   style: greyNormalTextStyle,
                                 ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 // Text(
                                 //   '${item['exp']} Years Experience',
                                 //   style: primaryColorNormalTextStyle,
                                 // ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -244,9 +241,9 @@ class _ImagesListState extends State<UploadImages> {
                               Navigator.push(
                                 context,
                                 PageTransition(
-                                  duration: Duration(milliseconds: 600),
+                                  duration: const Duration(milliseconds: 600),
                                   type: PageTransitionType.fade,
-                                  child: DoctorTimeSlot(
+                                  child: const DoctorTimeSlot(
                                       // doctorImage: item['image'],
                                       // doctorName: item['name'],
                                       // doctorType: widget.doctorType,

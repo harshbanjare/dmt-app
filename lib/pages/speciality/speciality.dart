@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Speciality extends StatelessWidget {
-  final doctorTypeList = [
+  static const List<Map<String, String>> doctorTypeList = [
     {'type': 'Cough & Fever', 'image': 'assets/icons/patient.png'},
     {'type': 'Homoeopath', 'image': 'assets/icons/stethoscope.png'},
     {'type': 'Gynecologist', 'image': 'assets/icons/woman.png'},
@@ -14,6 +14,8 @@ class Speciality extends StatelessWidget {
     {'type': 'Spine and Pain Specialist', 'image': 'assets/icons/pain.png'},
     {'type': 'Dentist', 'image': 'assets/icons/dentist.png'}
   ];
+
+  const Speciality({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class Speciality extends StatelessWidget {
           },
         ),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(65.0),
+          preferredSize: const Size.fromHeight(65.0),
           child: Container(
             color: whiteColor,
             height: 65.0,
@@ -62,7 +64,7 @@ class Speciality extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: 'Search specialities',
                   hintStyle: greyNormalTextStyle,
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.only(
                       top: fixPadding * 0.78, bottom: fixPadding * 0.78),
@@ -76,8 +78,8 @@ class Speciality extends StatelessWidget {
         padding: EdgeInsets.all(fixPadding),
         child: GridView.builder(
           itemCount: doctorTypeList.length,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {
             final item = doctorTypeList[index];
             return Padding(
@@ -87,7 +89,7 @@ class Speciality extends StatelessWidget {
                   Navigator.push(
                     context,
                     PageTransition(
-                      duration: Duration(milliseconds: 800),
+                      duration: const Duration(milliseconds: 800),
                       type: PageTransitionType.fade,
                       child: DoctorList(
                         doctorType: item['type']!,
@@ -118,7 +120,7 @@ class Speciality extends StatelessWidget {
                           height: 75.0,
                           fit: BoxFit.cover,
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         Text(
                           item['type']!,
                           style: blackNormalBoldTextStyle,

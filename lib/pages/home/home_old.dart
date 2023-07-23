@@ -1,29 +1,20 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:dmt/camscanner/utils.dart';
 import 'package:dmt/constant/constant.dart';
 import 'package:dmt/imagepicker/pickimages.dart';
 import 'package:dmt/pages/Models/driver_data_model.dart';
-import 'package:dmt/pages/doctor/upload_images_page.dart';
 import 'package:dmt/pages/doctor/upload_pdf_from_phone.dart';
 import 'package:dmt/pages/screens.dart';
 import 'package:dmt/pages/util/ApiUrl.dart';
-import 'package:dmt/webview/webview.dart';
-import 'package:dmt/widget/column_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
-import 'package:dmt/pages/util/ApiUrl.dart';
 import '../configapi.dart';
-import 'package:document_scanner_flutter/configs/configs.dart';
-import 'package:document_scanner_flutter/document_scanner_flutter.dart';
+// import 'package:document_scanner_flutter/configs/configs.dart';
+// import 'package:document_scanner_flutter/document_scanner_flutter.dart';
 
 late Future<DriverData> futureAlbum;
 String profileImg = "http://dm.ajeetwork.xyz/storage/app/public/";
@@ -52,6 +43,8 @@ _sendingMails() async {
 }
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -88,7 +81,7 @@ class _HomeState extends State<Home> {
                 color: blackColor,
                 size: 18.0,
               ),
-              SizedBox(width: 5.0),
+              const SizedBox(width: 5.0),
               Text(
                 city,
                 style: appBarLocationTextStyle,
@@ -106,9 +99,9 @@ class _HomeState extends State<Home> {
               Navigator.push(
                   context,
                   PageTransition(
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       type: PageTransitionType.rightToLeft,
-                      child: Notifications()));
+                      child: const Notifications()));
             },
           ),
         ],
@@ -132,10 +125,10 @@ class _HomeState extends State<Home> {
         Navigator.push(
             context,
             PageTransition(
-                duration: Duration(milliseconds: 400),
+                duration: const Duration(milliseconds: 400),
                 type: PageTransitionType.scale,
                 alignment: Alignment.bottomCenter,
-                child: Profile()));
+                child: const Profile()));
       },
       child: Container(
         margin: EdgeInsets.all(fixPadding * 2.0),
@@ -162,10 +155,9 @@ class _HomeState extends State<Home> {
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return Text(
-                                '' +
-                                    (snapshot.data != null
+                                snapshot.data != null
                                         ? snapshot.data!.name
-                                        : ''),
+                                        : '',
                                 style: whiteColorHeadingTextStyle,
                                 maxLines: 1,
                               );
@@ -179,7 +171,7 @@ class _HomeState extends State<Home> {
                             // By default, show a loading spinner.
                             return const CircularProgressIndicator();
                           }),
-                      SizedBox(height: 5.0),
+                      const SizedBox(height: 5.0),
                       FutureBuilder<DriverData>(
                           future: futureAlbum,
                           builder: (context, snapshot) {
@@ -204,10 +196,10 @@ class _HomeState extends State<Home> {
                             // By default, show a loading spinner.
                             return const CircularProgressIndicator();
                           }),
-                      SizedBox(height: 5.0),
+                      const SizedBox(height: 5.0),
                     ],
                   ),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [],
                   ),
@@ -247,7 +239,7 @@ class _HomeState extends State<Home> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         border: Border.all(width: 0.2, color: greyColor),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: NetworkImage("profileImg"),
                           //profilePic
                           fit: BoxFit.cover,
@@ -273,7 +265,7 @@ class _HomeState extends State<Home> {
       height: height / 8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        image: DecorationImage(
+        image: const DecorationImage(
           image: AssetImage('assets/banner.jpg'),
           fit: BoxFit.fill,
         ),
@@ -300,12 +292,12 @@ class _HomeState extends State<Home> {
             style: blackHeadingTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           height: 190.0,
           child: ListView.builder(
             itemCount: doctorTypeList.length,
             scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final item = doctorTypeList[index];
               return InkWell(
@@ -329,9 +321,9 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                       context,
                       PageTransition(
-                        duration: Duration(milliseconds: 800),
+                        duration: const Duration(milliseconds: 800),
                         type: PageTransitionType.fade,
-                        child: PickImagePage(),
+                        child: const PickImagePage(),
                       ),
                     );
                   } else if (index == 2) // PDF From Gallery
@@ -339,9 +331,9 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                       context,
                       PageTransition(
-                        duration: Duration(milliseconds: 800),
+                        duration: const Duration(milliseconds: 800),
                         type: PageTransitionType.fade,
-                        child: UploadPdfGalleryPage(
+                        child: const UploadPdfGalleryPage(
                           pdfurl: "",
                           doctorType: 'Upload PDF From Your Device',
                         ),
@@ -403,11 +395,11 @@ class _HomeState extends State<Home> {
               Navigator.push(
                   context,
                   PageTransition(
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       type: PageTransitionType.fade,
-                      child: Speciality()));
+                      child: const Speciality()));
             },
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
             ),

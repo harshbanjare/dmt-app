@@ -11,6 +11,7 @@ class AppException implements Exception {
 
   AppException([this._message, this._prefix]);
 
+  @override
   String toString() {
     return "$_prefix$_message";
   }
@@ -35,18 +36,18 @@ class InvalidInputException extends AppException {
 
 class ApiBaseHelper {
   // String baseUrl = "http://dm.ajeetwork.xyz/api/";
-  String baseUrl = ServiceUrl.baseUrl + "api/";
+  String baseUrl = "${ServiceUrl.baseUrl}api/";
 
   Future<dynamic> get(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token =
-        (prefs.getString('token') != null ? prefs.getString('token') : "");
+        (prefs.getString('token') ?? "");
     var kHeader = {
-      "Authorization": "Bearer " + token!,
+      "Authorization": "Bearer $token",
       "Content-Type": "application/x-www-form-urlencoded",
     };
-    print("HEADERS::::::::: " + kHeader.toString());
-    print("Url " + baseUrl + url);
+    print("HEADERS::::::::: $kHeader");
+    print("Url $baseUrl$url");
 
     var responseJson;
     try {
@@ -69,25 +70,25 @@ class ApiBaseHelper {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token =
-        (prefs.getString('token') != null ? prefs.getString('token') : "");
-    print('login_token ' + token!);
+        (prefs.getString('token') ?? "");
+    print('login_token $token');
 
     var kHeader = {
-      "Authorization": "Bearer " + token,
+      "Authorization": "Bearer $token",
       "Content-Type": "application/x-www-form-urlencoded",
     };
-    print("HEADERS::::::::: " + kHeader.toString());
-    print("Url " + baseUrl + url);
+    print("HEADERS::::::::: $kHeader");
+    print("Url $baseUrl$url");
     try {
       final response = await http.post(Uri.parse(baseUrl + url),
           body: params, headers: kHeader);
-      log("FINAL RESPONSE ::::::::: " + response.body);
+      log("FINAL RESPONSE ::::::::: ${response.body}");
       try {
         return jsonDecode(response.body);
       } on FormatException catch (e) {
         print('error ${e.toString()}');
       }
-    } on SocketException catch (e) {
+    } on SocketException {
       print('error api error.................');
     }
     print('error after webcall.................');
@@ -97,14 +98,14 @@ class ApiBaseHelper {
       url, params, String filePath, String mediaName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token =
-        (prefs.getString('token') != null ? prefs.getString('token') : "");
-    print('login_token ' + token!);
+        (prefs.getString('token') ?? "");
+    print('login_token $token');
     var kHeaderMultiPart = {
-      "Authorization": "Bearer " + token,
+      "Authorization": "Bearer $token",
       "Content-Type": "multipart/form-data",
       // "Content-Type": "multipart/form-data;boundary=alamofire.boundary.bd5f22f730a6c10d"
     };
-    print("HEADERS::::::::: " + kHeaderMultiPart.toString());
+    print("HEADERS::::::::: $kHeaderMultiPart");
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -117,7 +118,7 @@ class ApiBaseHelper {
     print("\n\n\n${Uri.parse(baseUrl + url)}\n\n\n\n");
 
     final multipartRequest =
-        new http.MultipartRequest('POST', Uri.parse(baseUrl + url));
+        http.MultipartRequest('POST', Uri.parse(baseUrl + url));
     multipartRequest.fields.addAll(params);
     multipartRequest.headers.addAll(kHeaderMultiPart);
     var pic = await http.MultipartFile.fromPath(mediaName, filePath);
@@ -132,13 +133,13 @@ class ApiBaseHelper {
       } on FormatException catch (e) {
         var err = e.toString();
         err.split('<').map((i) {
-          print('${i.toString()}');
+          print(i.toString());
         });
 
         print('error11 ${e.toString()}');
         return {"status": false};
       }
-    } on SocketException catch (e) {
+    } on SocketException {
       //throw FetchDataException('No Internet connection');
       print('error api error.................');
       return {"status": false};

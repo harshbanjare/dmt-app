@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:logging/logging.dart';
-import 'package:dmt/camscanner/utils.dart';
 import 'package:dmt/constant/constant.dart';
-import 'package:dmt/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'final_comment.dart';
@@ -124,9 +120,9 @@ class _UploadsCamDocListState extends State<UploadCamDoc> {
                               Navigator.push(
                                   context,
                                   PageTransition(
-                                      duration: Duration(milliseconds: 600),
+                                      duration: const Duration(milliseconds: 600),
                                       type: PageTransitionType.fade,
-                                      child: CamFinalCommentPage()));
+                                      child: const CamFinalCommentPage()));
                             },
                             child: Container(
                               width: 100.0,
@@ -157,13 +153,13 @@ class _UploadsCamDocListState extends State<UploadCamDoc> {
                                   '${item['name']}',
                                   style: blackNormalBoldTextStyle,
                                 ),
-                                SizedBox(height: 7.0),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 // Text(
                                 //   '${item['exp']} Years Experience',
                                 //   style: primaryColorNormalTextStyle,
                                 // ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,

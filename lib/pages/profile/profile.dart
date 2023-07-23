@@ -4,12 +4,12 @@ import 'package:dmt/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dmt/pages/Models/driver_data_model.dart';
-import 'dart:convert';
 import 'package:dmt/pages/util/ApiUrl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
+  const Profile({super.key});
+
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -38,7 +38,7 @@ class _ProfileState extends State<Profile> {
           child: Wrap(
             children: [
               Container(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +47,7 @@ class _ProfileState extends State<Profile> {
                       "You sure want to logout?",
                       style: blackHeadingTextStyle,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 25.0,
                     ),
                     Row(
@@ -60,7 +60,7 @@ class _ProfileState extends State<Profile> {
                           child: Container(
                             width: (width / 3.5),
                             alignment: Alignment.center,
-                            padding: EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(10.0),
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(5.0),
@@ -81,7 +81,7 @@ class _ProfileState extends State<Profile> {
                           child: Container(
                             width: (width / 3.5),
                             alignment: Alignment.center,
-                            padding: EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(10.0),
                             decoration: BoxDecoration(
                               color: primaryColor,
                               borderRadius: BorderRadius.circular(5.0),
@@ -118,7 +118,7 @@ class _ProfileState extends State<Profile> {
     var prefs = await SharedPreferences.getInstance();
     prefs.setString('token', '');
     prefs.setString('profile', '');
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
   }
 
   @override
@@ -126,7 +126,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: const Size.fromHeight(80.0),
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -142,7 +142,7 @@ class _ProfileState extends State<Profile> {
                     Container(
                       width: 44.0,
                       height: 44.0,
-                      margin: EdgeInsets.only(top: 5),
+                      margin: const EdgeInsets.only(top: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(22.0),
                         border: Border.all(width: 0.2, color: greyColor),
@@ -242,9 +242,9 @@ class _ProfileState extends State<Profile> {
                     Navigator.push(
                         context,
                         PageTransition(
-                            duration: Duration(milliseconds: 500),
+                            duration: const Duration(milliseconds: 500),
                             type: PageTransitionType.rightToLeft,
-                            child: AboutUs()));
+                            child: const AboutUs()));
                   },
                   child: listItem(primaryColor, Icons.touch_app, 'About Us'),
                 ),

@@ -8,11 +8,13 @@ import 'package:page_transition/page_transition.dart';
 import 'image_comment.dart';
 
 class PickImagePage extends StatefulWidget {
+  const PickImagePage({super.key});
+
   @override
-  _PickImagePageState createState() => _PickImagePageState();
+  PickImagePageState createState() => PickImagePageState();
 }
 
-class _PickImagePageState extends State<PickImagePage> {
+class PickImagePageState extends State<PickImagePage> {
   /// Variables
   File? imageFile;
   final ButtonStyle style = ElevatedButton.styleFrom(
@@ -32,71 +34,67 @@ class _PickImagePageState extends State<PickImagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Check Image"),
+        title: const Text("Check Image"),
       ),
-      body: Container(
-        child: ListView(
-          children: [
-            heightSpace,
-            profile_box(),
-            Expanded(
-              child: SizedBox(
-                width: 300.0,
-                height: 400.0,
-                child: selectedImages.isEmpty
-                    ? const Center(child: Text('Sorry nothing selected!!'))
-                    : GridView.builder(
-                        itemCount: selectedImages.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Center(
-                              child: kIsWeb
-                                  ? Image.network(selectedImages[index].path)
-                                  : Image.file(selectedImages[index]));
-                        },
-                      ),
-              ),
-            ),
-            !selectedImages.isEmpty
-                ? ElevatedButton(
-                    style: style,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          duration: const Duration(milliseconds: 800),
-                          type: PageTransitionType.fade,
-                          child: ImageCommentPage(
-                              imageFiles: selectedImages, type: 'load'),
-                        ),
-                      );
+      body: ListView(
+        children: [
+          heightSpace,
+          profileBox(),
+          SizedBox(
+            width: 300.0,
+            height: 400.0,
+            child: selectedImages.isEmpty
+                ? const Center(child: Text('Sorry nothing selected!!'))
+                : GridView.builder(
+                    itemCount: selectedImages.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Center(
+                          child: kIsWeb
+                              ? Image.network(selectedImages[index].path)
+                              : Image.file(selectedImages[index]));
                     },
-                    child: const Text('Ready to Upload'),
-                  )
-                : const SizedBox(),
-            heightSpace,
-            // profile_box2(),
-            heightSpace,
-            heightSpace,
-            heightSpace,
-          ],
-        ),
+                  ),
+          ),
+          selectedImages.isNotEmpty
+              ? ElevatedButton(
+                  style: style,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        duration: const Duration(milliseconds: 800),
+                        type: PageTransitionType.fade,
+                        child: ImageCommentPage(
+                            imageFiles: selectedImages, type: 'load'),
+                      ),
+                    );
+                  },
+                  child: const Text('Ready to Upload'),
+                )
+              : const SizedBox(),
+          heightSpace,
+          // profile_box2(),
+          heightSpace,
+          heightSpace,
+          heightSpace,
+        ],
       ),
     );
   }
 
-  profile_box() {
+  profileBox() {
     return InkWell(
       onTap: () {
         Navigator.push(
             context,
             PageTransition(
-                duration: Duration(milliseconds: 400),
+                duration: const Duration(milliseconds: 400),
                 type: PageTransitionType.scale,
                 alignment: Alignment.bottomCenter,
-                child: Profile()));
+                child: const Profile()));
       },
       child: Container(
         margin: EdgeInsets.all(fixPadding * 2.0),
@@ -142,33 +140,18 @@ class _PickImagePageState extends State<PickImagePage> {
     );
   }
 
-  profile_box2() {
+  profileBox2() {
     return InkWell(
       onTap: () {
         Navigator.push(
             context,
             PageTransition(
-                duration: Duration(milliseconds: 400),
+                duration: const Duration(milliseconds: 400),
                 type: PageTransitionType.scale,
                 alignment: Alignment.bottomCenter,
-                child: Profile()));
+                child: const Profile()));
       },
     );
-  }
-
-  /// Get from gallery
-  _getFromGallery() async {
-    // PickedFile? pickedFile = await ImagePicker().pickImage(
-    // PickedFile? pickedFile = await ImagePicker().getImage(
-    //     source: ImageSource.gallery,
-    //     // maxWidth: 1800,
-    //     // maxHeight: 1800,
-    //     imageQuality: 70);
-    // if (pickedFile != null) {
-    //   setState(() {
-    //     imageFile = File(pickedFile.path);
-    //   });
-    // }
   }
 
   Future _getMultiImages() async {
@@ -188,19 +171,5 @@ class _PickImagePageState extends State<PickImagePage> {
         }
       },
     );
-  }
-
-  /// Get from Camera
-  _getFromCamera() async {
-    // PickedFile? pickedFile = await ImagePicker().getImage(
-    //   source: ImageSource.camera,
-    //   maxWidth: 1800,
-    //   maxHeight: 1800,
-    // );
-    // if (pickedFile != null) {
-    //   setState(() {
-    //     imageFile = File(pickedFile.path);
-    //   });
-    // }
   }
 }

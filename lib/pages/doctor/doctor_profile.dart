@@ -8,7 +8,7 @@ class DoctorProfile extends StatefulWidget {
   final String doctorImage, doctorName, doctorType, experience;
 
   const DoctorProfile(
-      {required this.doctorImage,
+      {super.key, required this.doctorImage,
       required this.doctorName,
       required this.doctorType,
       required this.experience});
@@ -112,7 +112,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Container(
+                SizedBox(
                   width: (width - fixPadding * 11.0) / 2.0,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -132,8 +132,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.star, color: Colors.lime, size: 20.0),
-                          SizedBox(width: 5.0),
+                          const Icon(Icons.star, color: Colors.lime, size: 20.0),
+                          const SizedBox(width: 5.0),
                           Text(
                             '4.5 Rating',
                             style: whiteColorNormalTextStyle,
@@ -160,7 +160,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             maxChildSize: 1.0,
             builder: (BuildContext context, myscrollController) {
               return ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(30.0)),
                 child: Container(
                   color: whiteColor,
                   padding: EdgeInsets.all(fixPadding * 2.0),
@@ -280,7 +280,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             final item = ratingList[index];
             return Container(
               margin: (index == 0)
-                  ? EdgeInsets.symmetric(horizontal: 2.0)
+                  ? const EdgeInsets.symmetric(horizontal: 2.0)
                   : EdgeInsets.only(
                       top: fixPadding * 2.0, right: 2.0, left: 2.0),
               padding: EdgeInsets.all(fixPadding * 2.0),
@@ -325,12 +325,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
                               item['name'].toString(),
                               style: blackNormalBoldTextStyle,
                             ),
-                            SizedBox(height: 5.0),
+                            const SizedBox(height: 5.0),
                             Text(
                               item['time'].toString(),
                               style: greySmallTextStyle,
                             ),
-                            SizedBox(height: 5.0),
+                            const SizedBox(height: 5.0),
                             ratingBar(item['rating']),
                           ],
                         ),
@@ -355,7 +355,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             Navigator.push(
                 context,
                 PageTransition(
-                    duration: Duration(milliseconds: 600),
+                    duration: const Duration(milliseconds: 600),
                     type: PageTransitionType.rightToLeftWithFade,
                     child: Review(
                       reviewList: ratingList,

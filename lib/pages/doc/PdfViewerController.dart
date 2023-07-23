@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -8,10 +7,10 @@ final PdfViewerController _pdfViewerController=PdfViewerController();
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: Text('Syncfusion Flutter PDF Viewer'),
+      title: const Text('Syncfusion Flutter PDF Viewer'),
       actions: <Widget>[
         IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_drop_down_circle,
             color: Colors.white,
           ),

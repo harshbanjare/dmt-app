@@ -3,6 +3,8 @@ import 'package:dmt/widget/column_builder.dart';
 import 'package:flutter/material.dart';
 
 class PatientDirectory extends StatefulWidget {
+  const PatientDirectory({super.key});
+
   @override
   _PatientDirectoryState createState() => _PatientDirectoryState();
 }
@@ -35,7 +37,7 @@ class _PatientDirectoryState extends State<PatientDirectory> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {},
       ),
       body: ListView(
@@ -52,7 +54,7 @@ class _PatientDirectoryState extends State<PatientDirectory> {
                 final item = patientList[index];
                 return Container(
                   margin: (index == 0)
-                      ? EdgeInsets.only(top: 0.0)
+                      ? const EdgeInsets.only(top: 0.0)
                       : EdgeInsets.only(top: fixPadding * 2.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

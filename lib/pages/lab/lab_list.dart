@@ -4,6 +4,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:dmt/pages/screens.dart';
 
 class LabList extends StatefulWidget {
+  const LabList({super.key});
+
   @override
   _LabListState createState() => _LabListState();
 }
@@ -77,7 +79,7 @@ class _LabListState extends State<LabList> {
           },
         ),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(65.0),
+          preferredSize: const Size.fromHeight(65.0),
           child: Container(
             color: whiteColor,
             height: 65.0,
@@ -102,7 +104,7 @@ class _LabListState extends State<LabList> {
                 decoration: InputDecoration(
                   hintText: 'Search Tasks',
                   hintStyle: greyNormalTextStyle,
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.only(
                       top: fixPadding * 0.78, bottom: fixPadding * 0.78),
@@ -123,7 +125,7 @@ class _LabListState extends State<LabList> {
                 Navigator.push(
                     context,
                     PageTransition(
-                        duration: Duration(milliseconds: 600),
+                        duration: const Duration(milliseconds: 600),
                         type: PageTransitionType.rightToLeft,
                         child: Lab(
                           name: item['name'].toString(),
@@ -149,7 +151,7 @@ class _LabListState extends State<LabList> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
                   color: whiteColor,
-                  boxShadow: <BoxShadow>[
+                  boxShadow: const <BoxShadow>[
                     BoxShadow(
                       blurRadius: 1.0,
                       spreadRadius: 1.0,
@@ -165,7 +167,7 @@ class _LabListState extends State<LabList> {
                       height: 180.0,
                       width: width / 3.0,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.horizontal(
+                        borderRadius: const BorderRadius.horizontal(
                             left: Radius.circular(10.0)),
                         image: DecorationImage(
                           image: AssetImage(item['image'].toString()),
@@ -184,7 +186,7 @@ class _LabListState extends State<LabList> {
                               item['name'].toString(),
                               style: blackNormalBoldTextStyle,
                             ),
-                            SizedBox(height: 5.0),
+                            const SizedBox(height: 5.0),
                             Text(
                               item['address'].toString(),
                               style: greySmallBoldTextStyle,

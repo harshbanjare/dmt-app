@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'chat_new/service/socket_service.dart';
-import 'chat_new/views/chat/chat_page.dart';
-import 'chat_new/views/chat/user_list_view.dart';
 
 class BottomBar extends StatefulWidget {
+  const BottomBar({super.key});
+
   @override
   _BottomBarState createState() => _BottomBarState();
 }
@@ -26,7 +26,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 70.0,
         child: BottomAppBar(
           child: Row(
@@ -44,12 +44,12 @@ class _BottomBarState extends State<BottomBar> {
       ),
       body: WillPopScope(
         child: (currentIndex == 0)
-            ? Home()
+            ? const Home()
             : (currentIndex == 1)
-                ? DoctorTimeSlot()
+                ? const DoctorTimeSlot()
                 : (currentIndex == 2)
-                    ? ChatList()
-                    : Profile(),
+                    ? const ChatList()
+                    : const Profile(),
         onWillPop: () async {
           bool backStatus = onWillPop();
           if (backStatus) {
@@ -89,8 +89,7 @@ class _BottomBarState extends State<BottomBar> {
 
   onWillPop() {
     DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+    if (now.difference(currentBackPressTime) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
       Fluttertoast.showToast(
         msg: 'Press Back Once Again to Exit.',

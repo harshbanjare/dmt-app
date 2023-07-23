@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dmt/pages/chat/chat_list.dart';
-import 'package:dmt/pages/chat_new/model/chat.dart';
 
-import '../../../chat/chat.dart';
 import '../../service/socket_service.dart';
 import '../../utils/constants.dart';
-import '../chat/chat_page.dart';
 
 class SetupPage extends StatelessWidget {
   const SetupPage({Key? key}) : super(key: key);
@@ -23,7 +20,7 @@ class SetupPage extends StatelessWidget {
         SocketService.setUserName(name);
         SocketService.connectAndListen();
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => ChatList(),
+          builder: (context) => const ChatList(),
         ));
       }
     }

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ChatList extends StatefulWidget {
+  const ChatList({super.key});
+
   @override
   _ChatListState createState() => _ChatListState();
 }
@@ -39,7 +41,7 @@ class _ChatListState extends State<ChatList> {
           style: appBarTitleTextStyle,
         ),
       ),
-      body: (chatList.length == 0)
+      body: (chatList.isEmpty)
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +73,7 @@ class _ChatListState extends State<ChatList> {
                         Navigator.push(
                             context,
                             PageTransition(
-                                duration: Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 500),
                                 type: PageTransitionType.rightToLeft,
                                 child: ChatScreen(
                                   name: item['name']!,
@@ -120,7 +122,7 @@ class _ChatListState extends State<ChatList> {
                                               '${item['name']}',
                                               style: blackNormalBoldTextStyle,
                                             ),
-                                            SizedBox(width: 7.0),
+                                            const SizedBox(width: 7.0),
                                             (item['status'] == 'unread')
                                                 ? Container(
                                                     width: 10.0,

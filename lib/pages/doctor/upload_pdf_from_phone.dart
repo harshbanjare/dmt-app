@@ -1,12 +1,9 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:dmt/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:dmt/pages/pdf/local_Pdf_view.dart';
 import 'package:page_transition/page_transition.dart';
-import 'filepicker_pdf.dart';
-import 'final_comment.dart';
 
 class UploadPdfGalleryPage extends StatefulWidget {
   final String doctorType;
@@ -22,12 +19,12 @@ class UploadPdfGalleryPage extends StatefulWidget {
 
 class _UploadPdfGalleryPageState extends State<UploadPdfGalleryPage> {
   bool _loadingPath = false;
-  bool _multiPick = false;
+  final bool _multiPick = false;
   String? _directoryPath;
-  String? _extension = 'pdf';
+  final String _extension = 'pdf';
   String? _fileName;
   List<PlatformFile>? _paths;
-  FileType _pickingType = FileType.custom;
+  final FileType _pickingType = FileType.custom;
 
   var doctorList = [
     {
@@ -164,17 +161,17 @@ class _UploadPdfGalleryPageState extends State<UploadPdfGalleryPage> {
                                   '${item['name']}',
                                   style: blackNormalBoldTextStyle,
                                 ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 Text(
                                   widget.doctorType,
                                   style: greyNormalTextStyle,
                                 ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 // Text(
                                 //   '${item['exp']} Years Experience',
                                 //   style: primaryColorNormalTextStyle,
                                 // ),
-                                SizedBox(height: 7.0),
+                                const SizedBox(height: 7.0),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -269,13 +266,13 @@ class _UploadPdfGalleryPageState extends State<UploadPdfGalleryPage> {
         type: _pickingType,
         allowMultiple: false,
         // allowMultiple: _multiPick,
-        allowedExtensions: (_extension?.isNotEmpty ?? false)
-            ? _extension?.replaceAll(' ', '').split(',')
+        allowedExtensions: (_extension.isNotEmpty ?? false)
+            ? _extension.replaceAll(' ', '').split(',')
             : null,
       ))
           ?.files;
     } on PlatformException catch (e) {
-      print("Unsupported operation" + e.toString());
+      print("Unsupported operation$e");
     } catch (ex) {
       print(ex);
     }
@@ -295,7 +292,7 @@ class _UploadPdfGalleryPageState extends State<UploadPdfGalleryPage> {
     Navigator.push(
         context,
         PageTransition(
-            duration: Duration(milliseconds: 600),
+            duration: const Duration(milliseconds: 600),
             type: PageTransitionType.fade,
             child: LocalPdfViewPage(pdfurl: filePath, type: uploadType)));
   }

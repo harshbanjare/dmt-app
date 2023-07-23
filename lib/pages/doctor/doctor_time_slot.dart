@@ -1,13 +1,9 @@
-import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:dmt/constant/constant.dart';
-import 'package:dmt/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:dmt/utils/ApiHelper.dart';
 import 'package:dmt/pages/pdf/ViewPdf.dart';
 import 'package:dmt/pages/pdf/ViewImage.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:dmt/pages/util/ApiUrl.dart';
@@ -23,6 +19,8 @@ class DoctorTimeSlot extends StatefulWidget {
       doctorType = "click to see document",
       experience = "khgkb";
 
+  const DoctorTimeSlot({super.key});
+
   @override
   _DoctorTimeSlotState createState() => _DoctorTimeSlotState();
 }
@@ -33,7 +31,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
   late String selectedDate;
   late String monthString;
   DateTime firstDate = DateTime.now();
-  DateTime lastDate = DateTime.now().add(Duration(days: 0));
+  DateTime lastDate = DateTime.now().add(const Duration(days: 0));
 
   var dataList = [];
   var dataList1 = [
@@ -60,8 +58,8 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
   }
 
   void _resetSelectedDate() {
-    DateTime now = new DateTime.now();
-    _selectedDate = new DateTime(now.year, now.month, now.day);
+    DateTime now = DateTime.now();
+    _selectedDate = DateTime(now.year, now.month, now.day);
 
     // _selectedDate = DateTime.now();
     // _selectedDate = date
@@ -71,7 +69,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
 
   Future getUploadedDocuments() async {
     String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
-    print(' :::::::::::::::::::: --- ' + formattedDate);
+    print(' :::::::::::::::::::: --- $formattedDate');
 
     var sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString('token');
@@ -82,7 +80,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
       setState(() {
         dataList = map['documents'];
       });
-      print('NEW Request :::::::::::::::::::: --- ' + dataList.toString());
+      print('NEW Request :::::::::::::::::::: --- $dataList');
     } else {
       setState(() {
         dataList = [];
@@ -104,7 +102,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: const Size.fromHeight(80.0),
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +135,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -159,10 +157,10 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                             onSelectionDate(context);
                           },
                           child: Container(
-                            margin: EdgeInsets.only(top: 6, left: 5),
+                            margin: const EdgeInsets.only(top: 6, left: 5),
                             child: Text(
                               "${_selectedDate.toLocal()}".split(' ')[0],
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -224,13 +222,13 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                         '${item['category']}',
                         style: blackNormalBoldTextStyle,
                       ),
-                      SizedBox(height: 7.0),
+                      const SizedBox(height: 7.0),
                       Text(
                         widget.doctorType,
                         style: greyNormalTextStyle,
                       ),
-                      SizedBox(height: 7.0),
-                      SizedBox(height: 7.0),
+                      const SizedBox(height: 7.0),
+                      const SizedBox(height: 7.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -252,7 +250,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                                 Navigator.push(
                                     context,
                                     PageTransition(
-                                        duration: Duration(milliseconds: 600),
+                                        duration: const Duration(milliseconds: 600),
                                         type: PageTransitionType.fade,
                                         child: path.contains('.pdf')
                                             ? ViewPdf(
@@ -265,7 +263,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                               child: Container(
                                 width: 50.0,
                                 height: 50.0,
-                                margin: EdgeInsets.all(3),
+                                margin: const EdgeInsets.all(3),
                                 decoration: BoxDecoration(
                                   color: whiteColor,
                                   boxShadow: <BoxShadow>[
@@ -275,7 +273,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                                       color: (Colors.grey[300])!,
                                     ),
                                   ],
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     image:
                                         AssetImage('assets/icons/pdficon.png'),
                                     fit: BoxFit.fitHeight,
@@ -296,9 +294,9 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                           Navigator.push(
                             context,
                             PageTransition(
-                              duration: Duration(milliseconds: 600),
+                              duration: const Duration(milliseconds: 600),
                               type: PageTransitionType.fade,
-                              child: DoctorTimeSlot(
+                              child: const DoctorTimeSlot(
                                   // doctorImage: item['image'],
                                   // doctorName: item['name'],
                                   // doctorType: widget.doctorType,

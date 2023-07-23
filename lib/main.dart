@@ -1,13 +1,8 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:dmt/appBehaviour/my_behaviour.dart';
 import 'package:dmt/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-
-import 'constant/constant.dart';
-import 'onesignal/onesignal_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +17,6 @@ void main() {
     // OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
     //   print("Accepted permission: $accepted");
     // });
-
-    EasyLoading.init();
-
     runApp(const MyApp());
   });
 }
@@ -36,7 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dm transport driver App',
-      home: SplashScreen(),
+      home: const SplashScreen(),
+      builder: EasyLoading.init(),
     );
   }
 }

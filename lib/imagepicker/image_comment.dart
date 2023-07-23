@@ -2,11 +2,9 @@ import 'dart:io';
 import 'dart:math';
 import 'package:dmt/constant/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:dmt/pages/screens.dart';
 import 'package:dmt/utils/ApiHelper.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ImageCommentPage extends StatelessWidget {
@@ -18,7 +16,7 @@ class ImageCommentPage extends StatelessWidget {
 
   static const _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  Random _rnd = Random();
+  final Random _rnd = Random();
 
   final TextEditingController textController = TextEditingController();
 
@@ -30,7 +28,7 @@ class ImageCommentPage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -43,7 +41,7 @@ class ImageCommentPage extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+                  stops: const [0.1, 0.3, 0.5, 0.7, 0.9],
                   colors: [
                     Colors.black.withOpacity(0.4),
                     Colors.black.withOpacity(0.55),
@@ -63,54 +61,54 @@ class ImageCommentPage extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   elevation: 0.0,
                   leading: IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Home()));
+                          MaterialPageRoute(builder: (context) => const Home()));
                     },
                   ),
                 ),
                 body: ListView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(top: 20.0, left: 20.0),
+                      padding: const EdgeInsets.only(top: 20.0, left: 20.0),
                       child: Text(
                         'Any Comment',
                         style: loginBigTextStyle,
                       ),
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: Text(
                         'Any note for document',
                         style: whiteSmallLoginTextStyle,
                       ),
                     ),
-                    SizedBox(height: 50.0),
-                    Padding(
+                    const SizedBox(height: 50.0),
+                    const Padding(
                       padding: EdgeInsets.only(right: 20.0, left: 20.0),
                     ),
-                    SizedBox(height: 20.0),
-                    Padding(
+                    const SizedBox(height: 20.0),
+                    const Padding(
                       padding: EdgeInsets.only(right: 20.0, left: 20.0),
                     ),
-                    SizedBox(height: 50.0),
+                    const SizedBox(height: 50.0),
                     Padding(
-                      padding: EdgeInsets.only(right: 20.0, left: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                       child: Container(
                         height: 100,
                         decoration: BoxDecoration(
                           color: Colors.grey[200]!.withOpacity(0.3),
-                          borderRadius: BorderRadius.all(Radius.circular(0.0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(0.0)),
                         ),
                         child: TextField(
                           style: inputLoginTextStyle,
                           //  obscureText: true,
                           controller: textController,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 20.0),
+                            contentPadding: const EdgeInsets.only(left: 20.0),
                             hintText: 'Note',
                             hintStyle: inputLoginTextStyle,
                             border: InputBorder.none,
@@ -118,10 +116,10 @@ class ImageCommentPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
-                    SizedBox(height: 40.0),
+                    const SizedBox(height: 20.0),
+                    const SizedBox(height: 40.0),
                     Padding(
-                      padding: EdgeInsets.only(right: 20.0, left: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30.0),
                         onTap: () async {
@@ -181,7 +179,7 @@ class ImageCommentPage extends StatelessWidget {
                                                 milliseconds: 600,
                                               ),
                                               type: PageTransitionType.fade,
-                                              child: BottomBar()),
+                                              child: const BottomBar()),
                                         );
                                       },
                                     ),
@@ -200,7 +198,7 @@ class ImageCommentPage extends StatelessWidget {
                             gradient: LinearGradient(
                               begin: Alignment.centerLeft,
                               end: Alignment.bottomRight,
-                              stops: [0.1, 0.5, 0.9],
+                              stops: const [0.1, 0.5, 0.9],
                               colors: [
                                 Colors.blue[300]!.withOpacity(0.8),
                                 Colors.blue[500]!.withOpacity(0.8),
@@ -223,7 +221,7 @@ class ImageCommentPage extends StatelessWidget {
                 bool backStatus = onWillPop();
                 if (backStatus) {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()));
+                      MaterialPageRoute(builder: (context) => const Login()));
                 }
                 return false;
               },

@@ -3,6 +3,8 @@ import 'package:dmt/widget/column_builder.dart';
 import 'package:flutter/material.dart';
 
 class Search extends StatefulWidget {
+  const Search({super.key});
+
   @override
   _SearchState createState() => _SearchState();
 }
@@ -43,7 +45,7 @@ class _SearchState extends State<Search> {
             color: Colors.grey[100],
             borderRadius: BorderRadius.circular(25.0),
           ),
-          child: TextField(
+          child: const TextField(
             decoration: InputDecoration(
               hintText: 'Search for doctors & labs',
               hintStyle: TextStyle(
@@ -159,7 +161,7 @@ class _SearchState extends State<Search> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.trending_up,
+                          const Icon(Icons.trending_up,
                               color: Colors.blue, size: 22.0),
                           widthSpace,
                           Text(

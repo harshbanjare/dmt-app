@@ -57,8 +57,8 @@ class MessageView extends StatelessWidget {
                       const Padding(
                         padding: EdgeInsets.only(right: 8),
                         child: CircleAvatar(
-                          child: Icon(Icons.person, size: 10),
                           radius: 8,
+                          child: Icon(Icons.person, size: 10),
                         ),
                       ),
                     Flexible(

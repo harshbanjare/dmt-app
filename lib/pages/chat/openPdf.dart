@@ -1,6 +1,4 @@
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 
@@ -36,7 +34,7 @@ class _OpenPDFState extends State<OpenPDF> {
         child: Scaffold(
       body: Center(
           child: _isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : PDFViewer(

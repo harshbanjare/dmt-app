@@ -1,17 +1,12 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_cache_manager/file.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:dmt/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:dmt/pages/chat/DownloadingDialog.dart';
 import 'package:dmt/pages/chat/api/chat_api_service.dart';
 import 'package:dmt/pages/chat/model/ChatBean.dart';
-import 'package:dmt/pages/chat/openPdf.dart';
-import 'package:dmt/pages/chat_new/service/socket_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -35,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _scrollController = new ScrollController();
+    _scrollController = ScrollController();
     _getMessages();
     _callGetMessageApiPeriodically();
   }
@@ -51,9 +46,9 @@ class _ChatScreenState extends State<ChatScreen> {
   void _scrollToBottom() {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(0.0,
-          duration: Duration(milliseconds: 300), curve: Curves.elasticOut);
+          duration: const Duration(milliseconds: 300), curve: Curves.elasticOut);
     } else {
-      Timer(Duration(milliseconds: 400), () => _scrollToBottom());
+      Timer(const Duration(milliseconds: 400), () => _scrollToBottom());
     }
   }
 
@@ -70,7 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
         centerTitle: true,
         elevation: 1.0,
         title: Text(
-          '${widget.name}',
+          widget.name,
           style: appBarTitleTextStyle,
         ),
         leading: IconButton(
@@ -84,21 +79,22 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
       body: Stack(
+        fit: StackFit.expand,
         children: [
           Container(
-            margin: EdgeInsets.only(
+            margin: const EdgeInsets.only(
               bottom: 70.0,
             ),
             child: messageChatList.isNotEmpty
                 ? SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     reverse: true,
                     controller: _scrollController,
                     child: Column(children: <Widget>[
                       ListView.builder(
                         shrinkWrap: true,
                         itemCount: messageChatList.length,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           final item = messageChatList[index];
                           final isSenderAdminOrMaintainer =
@@ -120,7 +116,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           if (index == 0) {
                             _scrollToBottom();
                           }
-                          return Container(
+                          return SizedBox(
                             width: width,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -132,8 +128,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                   children: <Widget>[
                                     Padding(
                                       padding: isSenderAdminOrMaintainer
-                                          ? EdgeInsets.only(right: 100.0)
-                                          : EdgeInsets.only(left: 100.0),
+                                          ? const EdgeInsets.only(right: 100.0)
+                                          : const EdgeInsets.only(left: 100.0),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -149,7 +145,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   isSenderAdminOrMaintainer
-                                                      ? BorderRadius.only(
+                                                      ? const BorderRadius.only(
                                                           topLeft:
                                                               Radius.circular(
                                                                   5.0),
@@ -163,7 +159,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                               Radius.circular(
                                                                   5.0),
                                                         )
-                                                      : BorderRadius.only(
+                                                      : const BorderRadius.only(
                                                           topLeft:
                                                               Radius.circular(
                                                                   5.0),
@@ -219,7 +215,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                                     ? blackNormalTextStyle
                                                                     : whiteColorNormalTextStyle,
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 20,
                                                               ),
                                                               Text(
@@ -272,7 +268,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.all(10.0),
+                                            padding: const EdgeInsets.all(10.0),
                                             child: Row(
                                               mainAxisAlignment:
                                                   isSenderAdminOrMaintainer
@@ -291,7 +287,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                             Colors.blueAccent,
                                                         size: 14.0,
                                                       ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 7.0,
                                                 ),
                                                 Text(
@@ -334,11 +330,11 @@ class _ChatScreenState extends State<ChatScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              file != null ? Text(file.name) : SizedBox(),
+              file != null ? Text(file.name) : const SizedBox(),
               Container(
                 width: width,
                 height: 70.0,
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 alignment: Alignment.bottomLeft,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -373,7 +369,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     // Image.file(),
@@ -385,7 +381,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         child: TextField(
                           controller: msgController,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 13.0,
                             color: Colors.white,
                           ),
@@ -393,21 +389,19 @@ class _ChatScreenState extends State<ChatScreen> {
                           decoration: InputDecoration(
                             hintText: 'Type a Message',
                             hintStyle: whiteColorSmallTextStyle,
-                            contentPadding: EdgeInsets.only(left: 10.0),
+                            contentPadding: const EdgeInsets.only(left: 10.0),
                             border: InputBorder.none,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(width: 10.0),
+                    const SizedBox(width: 10.0),
                     InkWell(
                       borderRadius: BorderRadius.circular(20.0),
                       onTap: () async {
                         if (msgController.text != '' || file != null) {
                           var prefs = await SharedPreferences.getInstance();
-                          var token = (prefs.getString('token') != null
-                              ? prefs.getString('token')
-                              : "");
+                          var token = (prefs.getString('token') ?? "");
 
                           if (file == null) {
                             chatApiService.sendMessage({
@@ -460,7 +454,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ],
           ),
         ],
-        fit: StackFit.expand,
       ),
     );
   }
@@ -468,7 +461,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> _getMessages() async {
     var prefs = await SharedPreferences.getInstance();
     var token =
-        (prefs.getString('token') != null ? prefs.getString('token') : "");
+        (prefs.getString('token') ?? "");
     var chatBean = await chatApiService.getMessages(
         {"token": token ?? '', "coversation_type": widget.conversionType});
     setState(() {
@@ -481,7 +474,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _callGetMessageApiPeriodically() {
-    timer = Timer.periodic(Duration(seconds: 10), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       _getMessages();
     });
   }

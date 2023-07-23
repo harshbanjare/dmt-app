@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 
 class MenuItemWidget extends StatelessWidget {
   final String title;
@@ -9,7 +6,7 @@ class MenuItemWidget extends StatelessWidget {
   final IconData? startIcon;
   final IconData? endIcon;
 
-  MenuItemWidget(this.title, {this.onTap, this.startIcon, this.endIcon});
+  const MenuItemWidget(this.title, {super.key, this.onTap, this.startIcon, this.endIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +39,7 @@ class MenuItemWidget extends StatelessWidget {
 class TitleItemWidget extends StatelessWidget {
   final String title;
 
-  TitleItemWidget(this.title);
+  const TitleItemWidget(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {

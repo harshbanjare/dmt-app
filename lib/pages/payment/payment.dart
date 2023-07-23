@@ -3,6 +3,8 @@ import 'package:dmt/pages/screens.dart';
 import 'package:flutter/material.dart';
 
 class Payment extends StatefulWidget {
+  const Payment({super.key});
+
   @override
   _PaymentState createState() => _PaymentState();
 }
@@ -26,7 +28,7 @@ class _PaymentState extends State<Payment> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Container(
             height: 170.0,
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,7 +47,7 @@ class _PaymentState extends State<Payment> {
                     color: primaryColor,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 Text(
@@ -64,7 +66,7 @@ class _PaymentState extends State<Payment> {
       setState(() {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => BottomBar()),
+          MaterialPageRoute(builder: (context) => const BottomBar()),
         );
       });
     });
@@ -227,7 +229,7 @@ class _PaymentState extends State<Payment> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 50.0,
                   child:
                       Image.asset(imgPath, width: 50.0, fit: BoxFit.fitWidth),

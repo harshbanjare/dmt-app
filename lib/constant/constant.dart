@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-Color scaffoldBgColor = Color(0xFFFAF9F7);
-Color primaryColor = Color(0xFF6979F8);
+Color scaffoldBgColor = const Color(0xFFFAF9F7);
+Color primaryColor = const Color(0xFF6979F8);
 Color greyColor = Colors.grey;
 Color whiteColor = Colors.white;
 Color blackColor = Colors.black;
 Color lightPrimaryColor = primaryColor.withOpacity(0.2);
-Color darkBlueColor = Color(0xFF151C48);
+Color darkBlueColor = const Color(0xFF151C48);
 
 double fixPadding = 10.0;
 
-SizedBox widthSpace = SizedBox(width: 10.0);
+SizedBox widthSpace = const SizedBox(width: 10.0);
 
-SizedBox heightSpace = SizedBox(height: 10.0);
+SizedBox heightSpace = const SizedBox(height: 10.0);
 
 TextStyle appBarLocationTextStyle = TextStyle(
   color: blackColor,
@@ -172,7 +172,7 @@ TextStyle greySmallTextStyle = TextStyle(
 
 // Orange Color TextStyle
 
-TextStyle orangeButtonBoldTextStyle = TextStyle(
+TextStyle orangeButtonBoldTextStyle = const TextStyle(
   color: Colors.orange,
   fontSize: 12.0,
   fontWeight: FontWeight.bold,
@@ -180,45 +180,45 @@ TextStyle orangeButtonBoldTextStyle = TextStyle(
 
 // Green Color TextStyle
 
-TextStyle greenColorNormalTextStyle = TextStyle(
+TextStyle greenColorNormalTextStyle = const TextStyle(
   color: Colors.green,
   fontSize: 15.0,
 );
 
 // red Color TextStyle
 
-TextStyle redColorNormalTextStyle = TextStyle(
+TextStyle redColorNormalTextStyle = const TextStyle(
   color: Colors.red,
   fontSize: 15.0,
 );
 
 // Login Signup Text Style
 
-TextStyle loginBigTextStyle = TextStyle(
+TextStyle loginBigTextStyle = const TextStyle(
   color: Colors.white,
   fontSize: 30.0,
   fontWeight: FontWeight.w600,
 );
 
-TextStyle whiteSmallLoginTextStyle = TextStyle(
+TextStyle whiteSmallLoginTextStyle = const TextStyle(
   color: Colors.white,
   fontSize: 16.0,
   fontWeight: FontWeight.w400,
 );
 
-TextStyle blackSmallLoginTextStyle = TextStyle(
+TextStyle blackSmallLoginTextStyle = const TextStyle(
   color: Colors.black,
   fontSize: 16.0,
   fontWeight: FontWeight.w400,
 );
 
-TextStyle inputLoginTextStyle = TextStyle(
+TextStyle inputLoginTextStyle = const TextStyle(
   color: Colors.white,
   fontSize: 16.0,
   fontWeight: FontWeight.w500,
 );
 
-TextStyle inputOtpTextStyle = TextStyle(
+TextStyle inputOtpTextStyle = const TextStyle(
   color: Colors.white,
   fontSize: 18.0,
   fontWeight: FontWeight.w500,

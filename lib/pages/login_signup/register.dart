@@ -4,12 +4,14 @@ import 'package:page_transition/page_transition.dart';
 import 'package:dmt/pages/screens.dart';
 
 class Register extends StatelessWidget {
+  const Register({super.key});
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage('assets/doctor_bg.jpg'), fit: BoxFit.cover),
       ),
@@ -25,7 +27,7 @@ class Register extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+                  stops: const [0.1, 0.3, 0.5, 0.7, 0.9],
                   colors: [
                     Colors.black.withOpacity(0.4),
                     Colors.black.withOpacity(0.55),
@@ -45,43 +47,43 @@ class Register extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   elevation: 0.0,
                   leading: IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Login()));
+                          MaterialPageRoute(builder: (context) => const Login()));
                     },
                   ),
                 ),
                 body: ListView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(top: 20.0, left: 20.0),
+                      padding: const EdgeInsets.only(top: 20.0, left: 20.0),
                       child: Text(
                         'Register',
                         style: loginBigTextStyle,
                       ),
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: Text(
                         'Create account',
                         style: whiteSmallLoginTextStyle,
                       ),
                     ),
-                    SizedBox(height: 50.0),
+                    const SizedBox(height: 50.0),
                     Padding(
-                      padding: EdgeInsets.only(right: 20.0, left: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[200]!.withOpacity(0.3),
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                         ),
                         child: TextField(
                           style: inputLoginTextStyle,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 20.0),
+                            contentPadding: const EdgeInsets.only(left: 20.0),
                             hintText: 'Username',
                             hintStyle: inputLoginTextStyle,
                             border: InputBorder.none,
@@ -89,18 +91,18 @@ class Register extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Padding(
-                      padding: EdgeInsets.only(right: 20.0, left: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[200]!.withOpacity(0.3),
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                         ),
                         child: TextField(
                           style: inputLoginTextStyle,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 20.0),
+                            contentPadding: const EdgeInsets.only(left: 20.0),
                             hintText: 'Email',
                             hintStyle: inputLoginTextStyle,
                             border: InputBorder.none,
@@ -108,19 +110,19 @@ class Register extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Padding(
-                      padding: EdgeInsets.only(right: 20.0, left: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[200]!.withOpacity(0.3),
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                         ),
                         child: TextField(
                           style: inputLoginTextStyle,
                           obscureText: true,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 20.0),
+                            contentPadding: const EdgeInsets.only(left: 20.0),
                             hintText: 'Password',
                             hintStyle: inputLoginTextStyle,
                             border: InputBorder.none,
@@ -128,19 +130,19 @@ class Register extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Padding(
-                      padding: EdgeInsets.only(right: 20.0, left: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[200]!.withOpacity(0.3),
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                         ),
                         child: TextField(
                           style: inputLoginTextStyle,
                           obscureText: true,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 20.0),
+                            contentPadding: const EdgeInsets.only(left: 20.0),
                             hintText: 'Confirm Password',
                             hintStyle: inputLoginTextStyle,
                             border: InputBorder.none,
@@ -148,18 +150,18 @@ class Register extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 40.0),
+                    const SizedBox(height: 40.0),
                     Padding(
-                      padding: EdgeInsets.only(right: 20.0, left: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30.0),
                         onTap: () {
                           Navigator.push(
                               context,
                               PageTransition(
-                                  duration: Duration(milliseconds: 600),
+                                  duration: const Duration(milliseconds: 600),
                                   type: PageTransitionType.fade,
-                                  child: BottomBar()));
+                                  child: const BottomBar()));
                         },
                         child: Container(
                           height: 50.0,
@@ -170,7 +172,7 @@ class Register extends StatelessWidget {
                             gradient: LinearGradient(
                               begin: Alignment.centerLeft,
                               end: Alignment.bottomRight,
-                              stops: [0.1, 0.5, 0.9],
+                              stops: const [0.1, 0.5, 0.9],
                               colors: [
                                 Colors.blue[300]!.withOpacity(0.8),
                                 Colors.blue[500]!.withOpacity(0.8),
@@ -185,7 +187,7 @@ class Register extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                   ],
                 ),
               ),
@@ -193,7 +195,7 @@ class Register extends StatelessWidget {
                 bool backStatus = onWillPop();
                 if (backStatus) {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()));
+                      MaterialPageRoute(builder: (context) => const Login()));
                 }
                 return false;
               },

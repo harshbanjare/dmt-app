@@ -32,17 +32,17 @@ class _DownloadingDialogState extends State<DownloadingDialog> {
         for (int x = 1; x < paths.length; x++) {
           String folder = paths[x];
           if (folder != "Android") {
-            newPath += "/" + folder;
+            newPath += "/$folder";
           } else {
             break;
           }
         }
-        newPath = newPath + "/DMTransport";
+        newPath = "$newPath/DMTransport";
         directory = Directory(newPath);
         String url = "https://dmtransport.ca/app/storage/docs/${widget.url}";
         String fileName = widget.url;
 
-        String savePath = directory.path + "/$fileName";
+        String savePath = "${directory.path}/$fileName";
         print(savePath);
 
         if (!await directory.exists()) {

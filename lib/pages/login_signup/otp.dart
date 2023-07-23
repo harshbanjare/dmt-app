@@ -7,6 +7,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:page_transition/page_transition.dart';
 
 class OTPScreen extends StatefulWidget {
+  const OTPScreen({super.key});
+
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
@@ -38,7 +40,7 @@ class _OTPScreenState extends State<OTPScreen> {
             child: Wrap(
               children: [
                 Container(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,7 +50,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         size: 40.0,
                         lineWidth: 1.0,
                       ),
-                      SizedBox(height: 25.0),
+                      const SizedBox(height: 25.0),
                       Text(
                         'Please Wait..',
                         style: greySmallTextStyle,
@@ -62,17 +64,17 @@ class _OTPScreenState extends State<OTPScreen> {
         },
       );
       Timer(
-          Duration(seconds: 3),
+          const Duration(seconds: 3),
           () => Navigator.push(
               context,
               PageTransition(
-                  duration: Duration(milliseconds: 600),
+                  duration: const Duration(milliseconds: 600),
                   type: PageTransitionType.fade,
-                  child: Register())));
+                  child: const Register())));
     }
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage('assets/truck.jpg'), fit: BoxFit.cover),
       ),
@@ -88,7 +90,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+                  stops: const [0.1, 0.3, 0.5, 0.7, 0.9],
                   colors: [
                     Colors.black.withOpacity(0.4),
                     Colors.black.withOpacity(0.55),
@@ -108,27 +110,27 @@ class _OTPScreenState extends State<OTPScreen> {
                 elevation: 0.0,
               ),
               body: ListView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 20.0, left: 20.0),
+                    padding: const EdgeInsets.only(top: 20.0, left: 20.0),
                     child: Text(
                       'Verification',
                       style: loginBigTextStyle,
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Padding(
-                    padding: EdgeInsets.only(left: 20.0),
+                    padding: const EdgeInsets.only(left: 20.0),
                     child: Text(
                       'Enter the OTP code from the phone we just sent you.',
                       style: whiteSmallLoginTextStyle,
                     ),
                   ),
-                  SizedBox(height: 50.0),
+                  const SizedBox(height: 50.0),
                   // OTP Box Start
                   Padding(
-                    padding: EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -147,7 +149,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             style: inputOtpTextStyle,
                             keyboardType: TextInputType.number,
                             cursorColor: whiteColor,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(18.0),
                               border: InputBorder.none,
                             ),
@@ -173,7 +175,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             style: inputOtpTextStyle,
                             keyboardType: TextInputType.number,
                             cursorColor: whiteColor,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(18.0),
                               border: InputBorder.none,
                             ),
@@ -199,7 +201,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             style: inputOtpTextStyle,
                             keyboardType: TextInputType.number,
                             cursorColor: whiteColor,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(18.0),
                               border: InputBorder.none,
                             ),
@@ -225,7 +227,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             style: inputOtpTextStyle,
                             keyboardType: TextInputType.number,
                             cursorColor: whiteColor,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(18.0),
                               border: InputBorder.none,
                             ),
@@ -239,9 +241,9 @@ class _OTPScreenState extends State<OTPScreen> {
                     ),
                   ),
                   // OTP Box End
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   Padding(
-                    padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -250,7 +252,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           'Didn\'t receive OTP Code!',
                           style: greySmallTextStyle,
                         ),
-                        SizedBox(width: 10.0),
+                        const SizedBox(width: 10.0),
                         InkWell(
                           onTap: () {},
                           child: Text(
@@ -261,18 +263,18 @@ class _OTPScreenState extends State<OTPScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 30.0),
+                  const SizedBox(height: 30.0),
                   Padding(
-                    padding: EdgeInsets.only(right: 20.0, left: 20.0),
+                    padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(30.0),
                       onTap: () {
                         Navigator.push(
                             context,
                             PageTransition(
-                                duration: Duration(milliseconds: 600),
+                                duration: const Duration(milliseconds: 600),
                                 type: PageTransitionType.fade,
-                                child: BottomBar()));
+                                child: const BottomBar()));
                       },
                       child: Container(
                         height: 50.0,
@@ -283,7 +285,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           gradient: LinearGradient(
                             begin: Alignment.centerLeft,
                             end: Alignment.bottomRight,
-                            stops: [0.1, 0.5, 0.9],
+                            stops: const [0.1, 0.5, 0.9],
                             colors: [
                               Colors.blue[300]!.withOpacity(0.8),
                               Colors.blue[500]!.withOpacity(0.8),

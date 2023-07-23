@@ -2,6 +2,8 @@ import 'package:dmt/constant/constant.dart';
 import 'package:flutter/material.dart';
 
 class Appointment extends StatefulWidget {
+  const Appointment({super.key});
+
   @override
   _AppointmentState createState() => _AppointmentState();
 }
@@ -89,7 +91,7 @@ class _AppointmentState extends State<Appointment> {
           child: Wrap(
             children: [
               Container(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +101,7 @@ class _AppointmentState extends State<Appointment> {
                       style: blackNormalTextStyle,
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Row(
@@ -112,7 +114,7 @@ class _AppointmentState extends State<Appointment> {
                           child: Container(
                             width: (MediaQuery.of(context).size.width / 3.5),
                             alignment: Alignment.center,
-                            padding: EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(10.0),
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(5.0),
@@ -133,7 +135,7 @@ class _AppointmentState extends State<Appointment> {
                           child: Container(
                             width: (MediaQuery.of(context).size.width / 3.5),
                             alignment: Alignment.center,
-                            padding: EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(10.0),
                             decoration: BoxDecoration(
                               color: primaryColor,
                               borderRadius: BorderRadius.circular(5.0),
@@ -204,7 +206,7 @@ class _AppointmentState extends State<Appointment> {
           text,
           style: blackSmallTextStyle,
         ),
-        SizedBox(width: 4.0),
+        const SizedBox(width: 4.0),
         Container(
           width: 20.0,
           height: 20.0,
@@ -226,7 +228,7 @@ class _AppointmentState extends State<Appointment> {
   }
 
   activeAppointment() {
-    return (activeAppoinmentList.length == 0)
+    return (activeAppoinmentList.isEmpty)
         ? Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -291,20 +293,20 @@ class _AppointmentState extends State<Appointment> {
                                   ),
                                   InkWell(
                                     onTap: () => deleteAppointmentDialog(index),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.close,
                                       size: 18.0,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 7.0),
+                              const SizedBox(height: 7.0),
                               Text(
                                 'Dr. ${item['doctorName']}',
                                 style: blackNormalTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              SizedBox(height: 7.0),
+                              const SizedBox(height: 7.0),
                               Text(
                                 '${item['doctorType']}',
                                 style: primaryColorsmallTextStyle,
@@ -324,7 +326,7 @@ class _AppointmentState extends State<Appointment> {
   }
 
   pastAppointment() {
-    return (pastAppoinmentList.length == 0)
+    return (pastAppoinmentList.isEmpty)
         ? Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -361,7 +363,7 @@ class _AppointmentState extends State<Appointment> {
                           width: 80.0,
                           height: 80.0,
                           alignment: Alignment.center,
-                          padding: EdgeInsets.all(3.0),
+                          padding: const EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40.0),
                             border: Border.all(width: 1.0, color: primaryColor),
@@ -383,13 +385,13 @@ class _AppointmentState extends State<Appointment> {
                                 item['time']!,
                                 style: blackHeadingTextStyle,
                               ),
-                              SizedBox(height: 7.0),
+                              const SizedBox(height: 7.0),
                               Text(
                                 'Dr. ${item['doctorName']}',
                                 style: blackNormalTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              SizedBox(height: 7.0),
+                              const SizedBox(height: 7.0),
                               Text(
                                 '${item['doctorType']}',
                                 style: primaryColorsmallTextStyle,
@@ -409,7 +411,7 @@ class _AppointmentState extends State<Appointment> {
   }
 
   cancelledAppointment() {
-    return (cancelledAppoinmentList.length == 0)
+    return (cancelledAppoinmentList.isEmpty)
         ? Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -446,7 +448,7 @@ class _AppointmentState extends State<Appointment> {
                           width: 80.0,
                           height: 80.0,
                           alignment: Alignment.center,
-                          padding: EdgeInsets.all(3.0),
+                          padding: const EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40.0),
                             border: Border.all(width: 1.0, color: Colors.red),
@@ -468,13 +470,13 @@ class _AppointmentState extends State<Appointment> {
                                 item['time']!,
                                 style: blackHeadingTextStyle,
                               ),
-                              SizedBox(height: 7.0),
+                              const SizedBox(height: 7.0),
                               Text(
                                 'Dr. ${item['doctorName']}',
                                 style: blackNormalTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              SizedBox(height: 7.0),
+                              const SizedBox(height: 7.0),
                               Text(
                                 '${item['doctorType']}',
                                 style: primaryColorsmallTextStyle,

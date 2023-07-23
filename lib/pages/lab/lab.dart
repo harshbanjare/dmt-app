@@ -6,7 +6,7 @@ class Lab extends StatefulWidget {
   final lat, lang;
 
   const Lab(
-      {required this.name,
+      {super.key, required this.name,
       required this.address,
       required this.image,
       @required this.lat,
@@ -145,17 +145,17 @@ class _LabState extends State<Lab> {
                           widget.name,
                           style: blackNormalBoldTextStyle,
                         ),
-                        SizedBox(height: 7.0),
+                        const SizedBox(height: 7.0),
                         Text(
                           widget.address,
                           style: greyNormalTextStyle,
                         ),
-                        SizedBox(height: 7.0),
+                        const SizedBox(height: 7.0),
                         Text(
                           'Timing:',
                           style: primaryColorsmallTextStyle,
                         ),
-                        SizedBox(height: 7.0),
+                        const SizedBox(height: 7.0),
                         Text(
                           '9:00 AM to 8:00 PM',
                           style: blackSmallTextStyle,
@@ -190,7 +190,7 @@ class _LabState extends State<Lab> {
             'Address',
             style: primaryColorHeadingTextStyle,
           ),
-          SizedBox(height: 7.0),
+          const SizedBox(height: 7.0),
           Text(
             widget.address,
             style: blackSmallBoldTextStyle,

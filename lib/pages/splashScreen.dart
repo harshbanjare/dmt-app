@@ -1,28 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dmt/constant/constant.dart';
 import 'package:dmt/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'login/LoginPageNew.dart';
-
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  SplashScreenState createState() => SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
 
   // Obtain shared preferences.
   late SharedPreferences prefs;
-  late String _token;
 
   String? osUserID;
 
@@ -45,10 +43,10 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> initOneSignal(BuildContext context) async {
+    EasyLoading.showProgress(0.3, status: 'Waiting for onesignal...');
+
     /// Set App Id.
     await OneSignal.shared.setAppId("d8bce1e1-1921-4eb5-a892-5a90f76591e0");
-
-    EasyLoading.showProgress(0.3, status: 'Waiting for onesignal...');
 
     final status = await OneSignal.shared.getDeviceState();
     // final String? osUserID = status?.userId;
@@ -60,12 +58,14 @@ class _SplashScreenState extends State<SplashScreen>
     // Store it into shared prefs, So that later we can use it.
     await saveODUserID(osUserID);
 
-    print("player_id" + osUserID.toString());
+    print("player_id$osUserID");
 
     // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
     await OneSignal.shared.promptUserForPushNotificationPermission(
       fallbackToSettings: true,
     );
+
+    EasyLoading.dismiss();
   }
 
   Future<void> initOneSignal2(BuildContext context) async {
@@ -80,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen>
     // Store it into shared prefs, So that later we can use it.
     saveODUserID(osUserID);
 
-    print("player_id" + osUserID.toString());
+    print("player_id$osUserID");
     // Fluttertoast.showToast(
     //     msg: osUserID.toString() ?? "",
     //     toastLength: Toast.LENGTH_SHORT,
@@ -125,7 +125,7 @@ class _SplashScreenState extends State<SplashScreen>
                 width: 200.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50.0),
-                  image: DecorationImage(
+                  image: const DecorationImage(
                     image: AssetImage('assets/icon.png'),
                     fit: BoxFit.cover,
                   ),
@@ -142,12 +142,11 @@ class _SplashScreenState extends State<SplashScreen>
     SharedPreferences.getInstance().then(
       (value) {
         var token = (value.getString('token') ?? "");
-
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    token.length > 10 ? BottomBar() : Login()));
+                    token.length > 10 ? const BottomBar() : const Login()));
       },
     );
     // print('login_token ' + token);

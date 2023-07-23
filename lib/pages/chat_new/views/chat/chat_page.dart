@@ -13,11 +13,11 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: const Text(appName)),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             UserListView(),
             _ChatBody(),
             SizedBox(height: 6),
@@ -35,15 +35,15 @@ class _ChatBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var chats = <Chat>[];
-    ScrollController _scrollController = ScrollController();
+    ScrollController scrollController = ScrollController();
 
     ///scrolls to the bottom of page
     void _scrollDown() {
       try {
         Future.delayed(
             const Duration(milliseconds: 300),
-            () => _scrollController
-                .jumpTo(_scrollController.position.maxScrollExtent));
+            () => scrollController
+                .jumpTo(scrollController.position.maxScrollExtent));
       } on Exception catch (_) {}
     }
 
@@ -59,7 +59,7 @@ class _ChatBody extends StatelessWidget {
           }
           _scrollDown();
           return ListView.builder(
-            controller: _scrollController,
+            controller: scrollController,
             itemCount: chats.length,
             itemBuilder: (BuildContext context, int index) =>
                 MessageView(chat: chats[index]),

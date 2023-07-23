@@ -8,7 +8,7 @@ class ConsultationDetail extends StatefulWidget {
   final String doctorName, doctorType, doctorImage, doctorExp, time, date;
 
   const ConsultationDetail(
-      {required this.doctorName,
+      {super.key, required this.doctorName,
       required this.doctorType,
       required this.doctorImage,
       required this.doctorExp,
@@ -60,8 +60,8 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
                 context,
                 PageTransition(
                     type: PageTransitionType.rightToLeft,
-                    duration: Duration(milliseconds: 600),
-                    child: Payment()));
+                    duration: const Duration(milliseconds: 600),
+                    child: const Payment()));
           },
           child: Container(
             width: double.infinity,
@@ -144,7 +144,7 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
                                           Navigator.push(
                                               context,
                                               PageTransition(
-                                                  duration: Duration(
+                                                  duration: const Duration(
                                                       milliseconds: 600),
                                                   type: PageTransitionType.fade,
                                                   child: DoctorProfile(
@@ -167,12 +167,12 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 7.0),
+                              const SizedBox(height: 7.0),
                               Text(
                                 widget.doctorType,
                                 style: greyNormalTextStyle,
                               ),
-                              SizedBox(height: 7.0),
+                              const SizedBox(height: 7.0),
                               Text(
                                 '${widget.doctorExp} Years Experience',
                                 style: primaryColorNormalTextStyle,
@@ -274,7 +274,7 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
               final item = patientList[index];
               return Container(
                 margin: (index == 0)
-                    ? EdgeInsets.only(top: 0.0)
+                    ? const EdgeInsets.only(top: 0.0)
                     : EdgeInsets.only(top: fixPadding * 2.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,

@@ -2,17 +2,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dmt/pages/comment/localpdfcomment.dart';
-import 'package:dmt/pages/doctor/doctor_list.dart';
-import 'package:dmt/pages/doctor/final_comment.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
-import 'package:dmt/utils/ApiHelper.dart';
-import 'package:dmt/pages/screens.dart';
-import 'package:dmt/pages/util/ApiUrl.dart';
 import 'package:dmt/imagepicker/image_comment.dart';
 
 class LocalPdfViewPage extends StatefulWidget {
@@ -36,10 +28,10 @@ class _LocalPdfViewPageState extends State<LocalPdfViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('PDF View'),
+          title: const Text('PDF View'),
           actions: <Widget>[
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.upload_file,
                 color: Colors.white,
               ),
@@ -59,11 +51,11 @@ class _LocalPdfViewPageState extends State<LocalPdfViewPage> {
 
   Future uploadPdf(context) async {
     var type = widget.type.toString();
-    print(' :::::::::::::::::::: --- ' + pdfurl);
+    print(' :::::::::::::::::::: --- $pdfurl');
     Navigator.push(
         context,
         PageTransition(
-            duration: Duration(milliseconds: 600),
+            duration: const Duration(milliseconds: 600),
             type: PageTransitionType.fade,
             child: ImageCommentPage(imageFiles: [File(pdfurl)], type: type)));
   }

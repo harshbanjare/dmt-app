@@ -1,12 +1,12 @@
 import 'package:dmt/constant/constant.dart';
 import 'package:dmt/pages/screens.dart';
-import 'package:dmt/pages/upload/uploaddoc.dart';
-import 'package:dmt/webview/webview.dart';
 import 'package:dmt/widget/column_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Uploaddoc extends StatefulWidget {
+  const Uploaddoc({super.key});
+
   @override
   _UploaddocState createState() => _UploaddocState();
 }
@@ -63,7 +63,7 @@ class _UploaddocState extends State<Home> {
           },
         ),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(65.0),
+          preferredSize: const Size.fromHeight(65.0),
           child: Container(
             color: whiteColor,
             height: 65.0,
@@ -120,10 +120,10 @@ class _UploaddocState extends State<Home> {
         Navigator.push(
             context,
             PageTransition(
-                duration: Duration(milliseconds: 400),
+                duration: const Duration(milliseconds: 400),
                 type: PageTransitionType.scale,
                 alignment: Alignment.bottomCenter,
-                child: Profile()));
+                child: const Profile()));
       },
       child: Container(
         margin: EdgeInsets.all(fixPadding * 2.0),
@@ -149,14 +149,14 @@ class _UploaddocState extends State<Home> {
                         'Rajesh Kumar',
                         style: whiteColorHeadingTextStyle,
                       ),
-                      SizedBox(height: 5.0),
+                      const SizedBox(height: 5.0),
                       Text(
                         'HR-26A-45822',
                         style: whiteColorSmallTextStyle,
                       ),
                     ],
                   ),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [],
                   ),
@@ -168,7 +168,7 @@ class _UploaddocState extends State<Home> {
               width: 150.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(0.0),
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: AssetImage('assets/user/user_7.jpg'),
                   fit: BoxFit.fill,
                 ),
@@ -189,7 +189,7 @@ class _UploaddocState extends State<Home> {
       height: height / 8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        image: DecorationImage(
+        image: const DecorationImage(
           image: AssetImage('assets/banner.jpg'),
           fit: BoxFit.fill,
         ),
@@ -216,12 +216,12 @@ class _UploaddocState extends State<Home> {
             style: blackHeadingTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           height: 190.0,
           child: ListView.builder(
             itemCount: doctorTypeList.length,
             scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final item = doctorTypeList[index];
               return InkWell(
@@ -229,9 +229,9 @@ class _UploaddocState extends State<Home> {
                   Navigator.push(
                     context,
                     PageTransition(
-                      duration: Duration(milliseconds: 800),
+                      duration: const Duration(milliseconds: 800),
                       type: PageTransitionType.fade,
-                      child: Uploaddoc(),
+                      child: const Uploaddoc(),
                     ),
                   );
                 },
@@ -287,11 +287,11 @@ class _UploaddocState extends State<Home> {
               Navigator.push(
                   context,
                   PageTransition(
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       type: PageTransitionType.fade,
-                      child: Speciality()));
+                      child: const Speciality()));
             },
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               // children: [
@@ -360,7 +360,7 @@ class _UploaddocState extends State<Home> {
                         height: 150.0,
                         width: width / 3.0,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.horizontal(
+                          borderRadius: const BorderRadius.horizontal(
                               left: Radius.circular(10.0)),
                           image: DecorationImage(
                             image: AssetImage(item['image'].toString()),
@@ -431,11 +431,11 @@ class _UploaddocState extends State<Home> {
               Navigator.push(
                   context,
                   PageTransition(
-                      duration: Duration(milliseconds: 600),
+                      duration: const Duration(milliseconds: 600),
                       type: PageTransitionType.rightToLeft,
-                      child: LabList()));
+                      child: const LabList()));
             },
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -465,16 +465,16 @@ class _UploaddocState extends State<Home> {
         builder: (BuildContext bc) {
           return Container(
             color: whiteColor,
-            child: new Wrap(
+            child: Wrap(
               children: <Widget>[
                 Container(
                   child: Container(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: <Widget>[
                         Container(
                           width: width,
-                          padding: EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Text(
                             'Choose City',
                             textAlign: TextAlign.center,
@@ -490,8 +490,8 @@ class _UploaddocState extends State<Home> {
                           },
                           child: Container(
                             width: width,
-                            padding: EdgeInsets.all(10.0),
-                            child: Text('Gurgoan'),
+                            padding: const EdgeInsets.all(10.0),
+                            child: const Text('Gurgoan'),
                           ),
                         ),
                         InkWell(
@@ -503,8 +503,8 @@ class _UploaddocState extends State<Home> {
                           },
                           child: Container(
                             width: width,
-                            padding: EdgeInsets.all(10.0),
-                            child: Text('Banglore'),
+                            padding: const EdgeInsets.all(10.0),
+                            child: const Text('Banglore'),
                           ),
                         ),
                         InkWell(
@@ -516,8 +516,8 @@ class _UploaddocState extends State<Home> {
                           },
                           child: Container(
                             width: width,
-                            padding: EdgeInsets.all(10.0),
-                            child: Text('Jaipur'),
+                            padding: const EdgeInsets.all(10.0),
+                            child: const Text('Jaipur'),
                           ),
                         ),
                       ],

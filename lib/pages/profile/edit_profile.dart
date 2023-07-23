@@ -2,6 +2,8 @@ import 'package:dmt/constant/constant.dart';
 import 'package:flutter/material.dart';
 
 class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
+
   @override
   _EditProfileState createState() => _EditProfileState();
 }
@@ -39,7 +41,7 @@ class _EditProfileState extends State<EditProfile> {
             child: Wrap(
               children: [
                 Container(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,7 +50,7 @@ class _EditProfileState extends State<EditProfile> {
                         "Change Full Name",
                         style: blackHeadingTextStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 25.0,
                       ),
                       TextField(
@@ -60,7 +62,7 @@ class _EditProfileState extends State<EditProfile> {
                           hintStyle: greySmallTextStyle,
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
@@ -71,7 +73,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: Container(
                               width: (width / 3.5),
                               alignment: Alignment.center,
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(5.0),
@@ -92,7 +94,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: Container(
                               width: (width / 3.5),
                               alignment: Alignment.center,
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(5.0),
@@ -128,7 +130,7 @@ class _EditProfileState extends State<EditProfile> {
             child: Wrap(
               children: [
                 Container(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -137,7 +139,7 @@ class _EditProfileState extends State<EditProfile> {
                         "Change Your Password",
                         style: blackHeadingTextStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 25.0,
                       ),
                       TextField(
@@ -164,7 +166,7 @@ class _EditProfileState extends State<EditProfile> {
                           hintStyle: greySmallTextStyle,
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
@@ -175,7 +177,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: Container(
                               width: (width / 3.5),
                               alignment: Alignment.center,
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(5.0),
@@ -193,7 +195,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: Container(
                               width: (width / 3.5),
                               alignment: Alignment.center,
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(5.0),
@@ -229,7 +231,7 @@ class _EditProfileState extends State<EditProfile> {
             child: Wrap(
               children: [
                 Container(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -238,7 +240,7 @@ class _EditProfileState extends State<EditProfile> {
                         "Change Phone Number",
                         style: blackHeadingTextStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 25.0,
                       ),
                       TextField(
@@ -250,7 +252,7 @@ class _EditProfileState extends State<EditProfile> {
                           hintStyle: greySmallTextStyle,
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
@@ -261,7 +263,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: Container(
                               width: (width / 3.5),
                               alignment: Alignment.center,
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(5.0),
@@ -282,7 +284,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: Container(
                               width: (width / 3.5),
                               alignment: Alignment.center,
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(5.0),
@@ -318,7 +320,7 @@ class _EditProfileState extends State<EditProfile> {
             child: Wrap(
               children: [
                 Container(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -327,7 +329,7 @@ class _EditProfileState extends State<EditProfile> {
                         "Change Email",
                         style: blackHeadingTextStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 25.0,
                       ),
                       TextField(
@@ -339,7 +341,7 @@ class _EditProfileState extends State<EditProfile> {
                           hintStyle: greySmallTextStyle,
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
@@ -350,7 +352,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: Container(
                               width: (width / 3.5),
                               alignment: Alignment.center,
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(5.0),
@@ -369,7 +371,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: Container(
                               width: (width / 3.5),
                               alignment: Alignment.center,
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(5.0),
@@ -435,7 +437,7 @@ class _EditProfileState extends State<EditProfile> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     border: Border.all(width: 2.0, color: whiteColor),
-                    image: DecorationImage(
+                    image: const DecorationImage(
                       image: AssetImage('assets/user/user_3.jpg'),
                       fit: BoxFit.cover,
                     ),
@@ -513,19 +515,19 @@ class _EditProfileState extends State<EditProfile> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
+          SizedBox(
             width: width - 80.0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Container(
+                SizedBox(
                   width: (width - 80.0) / 2.4,
                   child: Text(
                     title,
                     style: greyNormalTextStyle,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: (width - 80.0) / 2.0,
                   child: Text(
                     value,
@@ -553,16 +555,16 @@ class _EditProfileState extends State<EditProfile> {
         builder: (BuildContext bc) {
           return Container(
             color: whiteColor,
-            child: new Wrap(
+            child: Wrap(
               children: <Widget>[
                 Container(
                   child: Container(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: <Widget>[
                         Container(
                           width: width,
-                          padding: EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Text(
                             'Choose Option',
                             textAlign: TextAlign.center,
@@ -575,7 +577,7 @@ class _EditProfileState extends State<EditProfile> {
                           },
                           child: Container(
                             width: width,
-                            padding: EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -585,7 +587,7 @@ class _EditProfileState extends State<EditProfile> {
                                   color: Colors.black.withOpacity(0.7),
                                   size: 18.0,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10.0,
                                 ),
                                 Text('Camera', style: blackSmallTextStyle),
@@ -599,7 +601,7 @@ class _EditProfileState extends State<EditProfile> {
                           },
                           child: Container(
                             width: width,
-                            padding: EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -609,7 +611,7 @@ class _EditProfileState extends State<EditProfile> {
                                   color: Colors.black.withOpacity(0.7),
                                   size: 18.0,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10.0,
                                 ),
                                 Text(

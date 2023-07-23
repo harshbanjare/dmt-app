@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ProgressHUD.dart';
-import 'api/api_service.dart';
 import 'model/login_model.dart';
 
 class LoginPageNew extends StatefulWidget {
+  const LoginPageNew({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -22,16 +22,16 @@ class _LoginPageState extends State<LoginPageNew> {
   void initState() {
     super.initState();
     loginRequestModel =
-        new LoginRequestModel(email: '', password: '', os_user_id: '');
+        LoginRequestModel(email: '', password: '', os_user_id: '');
     getosUserID();
   }
 
   @override
   Widget build(BuildContext context) {
     return ProgressHUD(
-      child: _uiSetup(context),
       inAsyncCall: isApiCallProcess,
       opacity: 0.3,
+      child: _uiSetup(context),
     );
   }
 
@@ -46,25 +46,25 @@ class _LoginPageState extends State<LoginPageNew> {
               children: <Widget>[
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  margin: EdgeInsets.symmetric(vertical: 85, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 85, horizontal: 20),
                   child: Form(
                     key: globalFormKey,
                     child: Column(
                       children: <Widget>[
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Text(
                           "Login",
-                          style: Theme.of(context).textTheme.headline2,
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
-                        SizedBox(height: 20),
-                        new TextFormField(
+                        const SizedBox(height: 20),
+                        TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (input) => loginRequestModel.email = input!,
                           validator: (input) => !input!.contains('@')
                               ? "Email Id should be valid"
                               : null,
-                          decoration: new InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Email Address",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -83,8 +83,8 @@ class _LoginPageState extends State<LoginPageNew> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        new TextFormField(
+                        const SizedBox(height: 20),
+                        TextFormField(
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.secondary),
                           keyboardType: TextInputType.text,
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPageNew> {
                               ? "Password should be more than 3 characters"
                               : null,
                           obscureText: hidePassword,
-                          decoration: new InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Password",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPageNew> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         ElevatedButton(
                           // padding: EdgeInsets.symmetric(
                           //     vertical: 12, horizontal: 80),
@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPageNew> {
                                 isApiCallProcess = true;
                               });
                               print(
-                                  "onesignal_playerId2" + osUserID.toString());
+                                  "onesignal_playerId2$osUserID");
 
                               loginRequestModel.os_user_id =
                                   osUserID.toString();
@@ -166,14 +166,14 @@ class _LoginPageState extends State<LoginPageNew> {
                               //   });
                             }
                           },
-                          child: Text(
+                          child: const Text(
                             "Login",
                             style: TextStyle(color: Colors.white),
                           ),
                           // color: Theme.of(context).colorScheme.secondary,
                           // shape: StadiumBorder(),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                       ],
                     ),
                   ),
@@ -199,7 +199,7 @@ class _LoginPageState extends State<LoginPageNew> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       osUserID = prefs.getString("osUserID");
-      print("onesignal_playerId2" + osUserID.toString());
+      print("onesignal_playerId2$osUserID");
     });
   }
 }

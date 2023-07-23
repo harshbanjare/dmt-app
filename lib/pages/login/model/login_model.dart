@@ -6,8 +6,8 @@ class LoginResponseModel {
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
     return LoginResponseModel(
-      token: json["token"] != null ? json["token"] : "",
-      error: json["error"] != null ? json["error"] : "",
+      token: json["token"] ?? "",
+      error: json["error"] ?? "",
     );
   }
 }

@@ -1,6 +1,5 @@
 // main.dart
 import 'package:flutter/material.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dmt/pages/doctor/doctor_list.dart';
 import 'package:page_transition/page_transition.dart';
@@ -42,10 +41,10 @@ class _PdfViewPageState extends State<PdfViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PDF View'),
+        title: const Text('PDF View'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.upload_file,
               color: Colors.white,
             ),
@@ -56,7 +55,7 @@ class _PdfViewPageState extends State<PdfViewPage> {
               // print(widget.pdfurl);
 
               Fluttertoast.showToast(
-                  msg: "Working" + widget.pdfurl,
+                  msg: "Working${widget.pdfurl}",
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 1,
@@ -67,9 +66,9 @@ class _PdfViewPageState extends State<PdfViewPage> {
               Navigator.push(
                 context,
                 PageTransition(
-                  duration: Duration(milliseconds: 800),
+                  duration: const Duration(milliseconds: 800),
                   type: PageTransitionType.fade,
-                  child: DoctorList(
+                  child: const DoctorList(
                     doctorType: 'Upload PDF',
                   ),
                 ),
