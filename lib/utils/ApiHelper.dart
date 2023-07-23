@@ -114,6 +114,8 @@ class ApiBaseHelper {
       return {"status": false};
     }
 
+    print("\n\n\n${Uri.parse(baseUrl + url)}\n\n\n\n");
+
     final multipartRequest =
         new http.MultipartRequest('POST', Uri.parse(baseUrl + url));
     multipartRequest.fields.addAll(params);

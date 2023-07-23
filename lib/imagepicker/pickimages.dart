@@ -15,8 +15,14 @@ class PickImagePage extends StatefulWidget {
 class _PickImagePageState extends State<PickImagePage> {
   /// Variables
   File? imageFile;
-  final ButtonStyle style =
-      ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10));
+  final ButtonStyle style = ElevatedButton.styleFrom(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    alignment: Alignment.center,
+    textStyle: const TextStyle(
+      // fontSize: 16,
+      color: Colors.black,
+    ),
+  );
 
   List<File> selectedImages = []; // List of selected image
   final picker = ImagePicker(); // Instance of Image picker
@@ -25,92 +31,60 @@ class _PickImagePageState extends State<PickImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Check Image"),
-        ),
-        body: Container(
-            child: imageFile == null
-                ? ListView(
-                    children: [
-                      heightSpace,
-                      profile_box(),
-                      Expanded(
-                        child: SizedBox(
-                          width: 300.0,
-                          height: 400.0,
-                          child: selectedImages.isEmpty
-                              ? const Center(
-                                  child: Text('Sorry nothing selected!!'))
-                              : GridView.builder(
-                                  itemCount: selectedImages.length,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Center(
-                                        child: kIsWeb
-                                            ? Image.network(
-                                                selectedImages[index].path)
-                                            : Image.file(
-                                                selectedImages[index]));
-                                  },
-                                ),
-                        ),
+      appBar: AppBar(
+        title: Text("Check Image"),
+      ),
+      body: Container(
+        child: ListView(
+          children: [
+            heightSpace,
+            profile_box(),
+            Expanded(
+              child: SizedBox(
+                width: 300.0,
+                height: 400.0,
+                child: selectedImages.isEmpty
+                    ? const Center(child: Text('Sorry nothing selected!!'))
+                    : GridView.builder(
+                        itemCount: selectedImages.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Center(
+                              child: kIsWeb
+                                  ? Image.network(selectedImages[index].path)
+                                  : Image.file(selectedImages[index]));
+                        },
                       ),
-                      heightSpace,
-                      profile_box2(),
-                      heightSpace,
-                      heightSpace,
-                      heightSpace,
-                    ],
+              ),
+            ),
+            !selectedImages.isEmpty
+                ? ElevatedButton(
+                    style: style,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          duration: const Duration(milliseconds: 800),
+                          type: PageTransitionType.fade,
+                          child: ImageCommentPage(
+                              imageFiles: selectedImages, type: 'load'),
+                        ),
+                      );
+                    },
+                    child: const Text('Ready to Upload'),
                   )
-                : Container(
-                    child: InkWell(
-                      child: Container(
-                        margin: EdgeInsets.all(fixPadding * 2.0),
-                        padding: EdgeInsets.all(fixPadding * 1.5),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            widthSpace,
-                            Container(
-                              margin:
-                                  const EdgeInsets.only(top: 10.0, bottom: 10),
-                              child: Image.file(
-                                imageFile!,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ElevatedButton(
-                                    style: style,
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          duration: Duration(milliseconds: 800),
-                                          type: PageTransitionType.fade,
-                                          child: ImageCommentPage(
-                                              imageFile, 'load'),
-                                        ),
-                                      );
-                                    },
-                                    child: const Text('Ready to Upload'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )));
+                : const SizedBox(),
+            heightSpace,
+            // profile_box2(),
+            heightSpace,
+            heightSpace,
+            heightSpace,
+          ],
+        ),
+      ),
+    );
   }
 
   profile_box() {
@@ -142,27 +116,24 @@ class _PickImagePageState extends State<PickImagePage> {
               width: 150.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(0.0),
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: AssetImage('assets/user/gallery.png'),
                   fit: BoxFit.fill,
                 ),
               ),
             ),
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    style: style,
-                    onPressed: () async {
-                      // _getFromGallery();
-                      // _getMultiImages();
-                      await picker.pickMultiImage();
-                    },
-                    child: const Text('PICK FROM GALLERY'),
-                  ),
-                ],
+              child: ElevatedButton(
+                style: style,
+                onPressed: () async {
+                  // _getFromGallery();
+                  _getMultiImages();
+                  // await picker.pickMultiImage();
+                },
+                child: const Text(
+                  'PICK FROM GALLERY',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],
@@ -203,7 +174,7 @@ class _PickImagePageState extends State<PickImagePage> {
   Future _getMultiImages() async {
     final pickedFile = await picker.pickMultiImage(
         imageQuality: 100, maxHeight: 1000, maxWidth: 1000);
-    List<XFile> xfilePick = pickedFile!;
+    List<XFile> xfilePick = pickedFile;
 
     setState(
       () {

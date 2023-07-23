@@ -10,16 +10,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ImageCommentPage extends StatelessWidget {
-  File imageFile = new File("");
-  String type = '';
-  bool isLoading = false;
+  ImageCommentPage({super.key, required this.imageFiles, required this.type});
 
-  ImageCommentPage(File? imageFile, String type) {
-    if (imageFile != null) {
-      this.imageFile = imageFile;
-      this.type = type;
-    }
-  }
+  final List<File> imageFiles;
+  final String type;
+  bool isLoading = false;
 
   static const _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -129,15 +124,72 @@ class ImageCommentPage extends StatelessWidget {
                       padding: EdgeInsets.only(right: 20.0, left: 20.0),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30.0),
-                        onTap: () {
-                          uploadImage(context);
+                        onTap: () async {
+                          List<bool> uploadSuccess = [];
 
-                          // Navigator.push(
-                          //     context,
-                          //     PageTransition(
-                          //         duration: Duration(milliseconds: 600),
-                          //         type: PageTransitionType.fade,
-                          //         child: BottomBar()));
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return const Scaffold(
+                              body: Center(child: CircularProgressIndicator()),
+                            );
+                          }));
+
+                          for (File file in imageFiles) {
+                            uploadSuccess.add(await uploadImage(context, file));
+                          }
+
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return Scaffold(
+                              body: Center(
+                                child: SafeArea(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ...List.generate(
+                                      uploadSuccess.length,
+                                      (ind) => uploadSuccess[0]
+                                          ? Padding(
+                                              padding: const EdgeInsets.all(8),
+                                              child: Text(
+                                                "Image ${ind + 1} Upload Success",
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                            )
+                                          : Padding(
+                                              padding: const EdgeInsets.all(8),
+                                              child: Text(
+                                                "Image ${ind + 1} Upload Failed",
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                            ),
+                                    ),
+                                    ElevatedButton(
+                                      child: const Text("Continue"),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              duration: const Duration(
+                                                milliseconds: 600,
+                                              ),
+                                              type: PageTransitionType.fade,
+                                              child: BottomBar()),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                )),
+                              ),
+                            );
+                          }));
                         },
                         child: Container(
                           height: 50.0,
@@ -163,7 +215,7 @@ class ImageCommentPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                   ],
                 ),
               ),
@@ -182,99 +234,26 @@ class ImageCommentPage extends StatelessWidget {
     );
   }
 
-  Future<String> getTempPath() async {
-    var dir = await getExternalStorageDirectory();
-    await new Directory('${dir!.path}/CompressPdfs').create(recursive: true);
-    String randomString = getRandomString(10);
-    String pdfFileName = '$randomString.pdf';
-    return '${dir.path}/CompressPdfs/$pdfFileName';
-  }
+  Future<bool> uploadImage(context, File image) async {
+    debugPrint(' :::::::::::$type::::::::: --- ${image.path}');
 
-  // Future<String?> openFilePicker() async {
-  //   String outputPath = await getTempPath();
-  //   try {
-  //     await PdfCompressor.compressPdfFile(
-  //         imageFile.path, outputPath, CompressQuality.HIGH);
-  //         // imageFile.path, outputPath, CompressQuality.MEDIUM);
-  //     return outputPath;
-  //   } catch (e) {
-  //     return null;
-  //   }
-  // }
-
-  Future uploadImage(context) async {
-    print(' :::::::::::$type::::::::: --- ' + imageFile.path);
-
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }));
-
-    String path = "";
-    // if (imageFile.path.contains('.pdf')) {
-    //   String? result = await openFilePicker();
-    //   if (result == null) {
-    //     Fluttertoast.showToast(
-    //         msg: "Please try again",
-    //         toastLength: Toast.LENGTH_SHORT,
-    //         gravity: ToastGravity.CENTER,
-    //         timeInSecForIosWeb: 1,
-    //         backgroundColor: Colors.red,
-    //         textColor: Colors.white,
-    //         fontSize: 16.0);
-    //     Navigator.pop(context);
-    //     return;
-    //   } else {
-    //     path = result;
-    //   }
-    // } else {
-    path = imageFile.path;
-    // }
+    String path = image.path;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token =
-        (prefs.getString('token') != null ? prefs.getString('token') : "");
+    var token = (prefs.getString('token') ?? "");
 
     Map map = await ApiBaseHelper().multiPart(
-        "uploaddocument",
-        {
-          'category': type,
-          'comment': textController.text.toString(),
-          "token": '$token'
-        },
-        // {'category': "load", 'comment': textController.text.toString(), "token": '$token'},
-        path,
-        // imageFile.path,
-        "files[]");
+      "uploaddocument",
+      {
+        'category': type,
+        'comment': textController.text.toString(),
+        "token": token
+      },
+      path,
+      "files[]",
+    );
 
-    if (map["status"] == true) {
-      Fluttertoast.showToast(
-          msg: "Uploaded Successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-      Navigator.pop(context);
-      Navigator.push(
-          context,
-          PageTransition(
-              duration: Duration(milliseconds: 600),
-              type: PageTransitionType.fade,
-              child: BottomBar()));
-    } else {
-      Fluttertoast.showToast(
-          msg: "Please try again",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-      Navigator.pop(context);
-    }
+    return map["status"];
   }
 
   onWillPop() {

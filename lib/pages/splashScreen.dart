@@ -48,16 +48,19 @@ class _SplashScreenState extends State<SplashScreen>
     /// Set App Id.
     await OneSignal.shared.setAppId("d8bce1e1-1921-4eb5-a892-5a90f76591e0");
 
-    /// So, that it can be used to send Notifications to users later.̥
-    await Future.delayed(
-        Duration(seconds: 10)); // Add a delay to allow registration to complete
-
     EasyLoading.showProgress(0.3, status: 'Waiting for onesignal...');
 
     final status = await OneSignal.shared.getDeviceState();
     // final String? osUserID = status?.userId;
 
-    initOneSignal2(context);
+    // initOneSignal2(context);
+
+    final String? osUserID = status?.userId;
+
+    // Store it into shared prefs, So that later we can use it.
+    await saveODUserID(osUserID);
+
+    print("player_id" + osUserID.toString());
 
     // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
     await OneSignal.shared.promptUserForPushNotificationPermission(
@@ -68,8 +71,6 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> initOneSignal2(BuildContext context) async {
     /// Set App Id.
     // await OneSignal.shared.setAppId("d8bce1e1-1921-4eb5-a892-5a90f76591e0");
-    await Future.delayed(
-        Duration(seconds: 5)); // Add a delay to allow registration to complete
 
     /// Get the Onesignal userId and update that into the firebase.
     /// So, that it can be used to send Notifications to users later.̥
@@ -137,17 +138,18 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 
-  getLoginToken() async {
-    prefs = await SharedPreferences.getInstance();
-    var token =
-        (prefs.getString('token') != null ? prefs.getString('token') : "");
-    print('login_token ' + token!);
-    Timer(
-        Duration(seconds: 17),
-        () => Navigator.push(
+  getLoginToken() {
+    SharedPreferences.getInstance().then(
+      (value) {
+        var token = (value.getString('token') ?? "");
+
+        Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    token.length > 10 ? BottomBar() : Login())));
+                    token.length > 10 ? BottomBar() : Login()));
+      },
+    );
+    // print('login_token ' + token);
   }
 }

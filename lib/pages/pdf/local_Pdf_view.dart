@@ -65,6 +65,6 @@ class _LocalPdfViewPageState extends State<LocalPdfViewPage> {
         PageTransition(
             duration: Duration(milliseconds: 600),
             type: PageTransitionType.fade,
-            child: ImageCommentPage(new File(pdfurl), type)));
+            child: ImageCommentPage(imageFiles: [File(pdfurl)], type: type)));
   }
 }
