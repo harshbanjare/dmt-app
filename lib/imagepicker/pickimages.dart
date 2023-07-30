@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,102 @@ class PickImagePageState extends State<PickImagePage> {
   List<File> selectedImages = []; // List of selected image
   final picker = ImagePicker(); // Instance of Image picker
 
-  /// Widget
+  void _pickFromGallery() {
+    picker
+        .pickMultiImage(
+      imageQuality: 100,
+      maxHeight: 1000,
+      maxWidth: 1000,
+    )
+        .then((pickedFiles) {
+      setState(
+        () {
+          if (pickedFiles.isNotEmpty) {
+            for (var i = 0; i < pickedFiles.length; i++) {
+              selectedImages.add(File(pickedFiles[i].path));
+            }
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Nothing is selected')));
+          }
+        },
+      );
+    });
+  }
+
+  void _pickFromCamera() {
+    picker.pickImage(source: ImageSource.camera).then((pickedFile) {
+      setState(
+        () {
+          if (pickedFile != null) {
+            selectedImages.add(File(pickedFile.path));
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Nothing is selected')));
+          }
+        },
+      );
+    });
+  }
+
+  profileBox() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          PageTransition(
+            duration: const Duration(milliseconds: 400),
+            type: PageTransitionType.scale,
+            alignment: Alignment.bottomCenter,
+            child: const Profile(),
+          ),
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: Colors.grey,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/user/gallery.png',
+              width: 150.0,
+              height: 150.0,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    style: style,
+                    onPressed: _pickFromGallery,
+                    child: const Text(
+                      'Pick from gallery',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: style,
+                    onPressed: _pickFromCamera,
+                    child: const Text(
+                      'Pick from camera',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,117 +155,27 @@ class PickImagePageState extends State<PickImagePage> {
                   ),
           ),
           selectedImages.isNotEmpty
-              ? ElevatedButton(
-                  style: style,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        duration: const Duration(milliseconds: 800),
-                        type: PageTransitionType.fade,
-                        child: ImageCommentPage(
-                            imageFiles: selectedImages, type: 'load'),
-                      ),
-                    );
-                  },
-                  child: const Text('Ready to Upload'),
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: style,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          duration: const Duration(milliseconds: 800),
+                          type: PageTransitionType.fade,
+                          child: ImageCommentPage(
+                              imageFiles: selectedImages, type: 'load'),
+                        ),
+                      );
+                    },
+                    child: const Text('Ready to Upload'),
+                  ),
                 )
               : const SizedBox(),
-          heightSpace,
-          // profile_box2(),
-          heightSpace,
-          heightSpace,
-          heightSpace,
         ],
       ),
-    );
-  }
-
-  profileBox() {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            PageTransition(
-                duration: const Duration(milliseconds: 400),
-                type: PageTransitionType.scale,
-                alignment: Alignment.bottomCenter,
-                child: const Profile()));
-      },
-      child: Container(
-        margin: EdgeInsets.all(fixPadding * 2.0),
-        padding: EdgeInsets.all(fixPadding * 1.5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.grey,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            widthSpace,
-            Container(
-              margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              height: 150.0,
-              width: 150.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(0.0),
-                image: const DecorationImage(
-                  image: AssetImage('assets/user/gallery.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-            Expanded(
-              child: ElevatedButton(
-                style: style,
-                onPressed: () async {
-                  // _getFromGallery();
-                  _getMultiImages();
-                  // await picker.pickMultiImage();
-                },
-                child: const Text(
-                  'PICK FROM GALLERY',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  profileBox2() {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            PageTransition(
-                duration: const Duration(milliseconds: 400),
-                type: PageTransitionType.scale,
-                alignment: Alignment.bottomCenter,
-                child: const Profile()));
-      },
-    );
-  }
-
-  Future _getMultiImages() async {
-    final pickedFile = await picker.pickMultiImage(
-        imageQuality: 100, maxHeight: 1000, maxWidth: 1000);
-    List<XFile> xfilePick = pickedFile;
-
-    setState(
-      () {
-        if (xfilePick.isNotEmpty) {
-          for (var i = 0; i < xfilePick.length; i++) {
-            selectedImages.add(File(xfilePick[i].path));
-          }
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Nothing is selected')));
-        }
-      },
     );
   }
 }

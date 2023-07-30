@@ -14,6 +14,7 @@ class SocketService {
 
   static Stream<Chat> get getResponse =>
       _socketResponse.stream.asBroadcastStream();
+
   static Stream<List<String>> get userResponse =>
       _userResponse.stream.asBroadcastStream();
 
@@ -41,7 +42,7 @@ class SocketService {
     //   'autoConnect': false,
     //   'transports': ['websocket'],
     // });
-    io.io(
+    _socket = io.io(
         serverUrl,
         io.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
@@ -51,7 +52,7 @@ class SocketService {
 
     _socket.connect();
     _socket.onConnect((data) => print('Connection established'));
-    _socket.onConnectError((err) => {print("SOCKETTTTTTTTTTTTTT"), print(err)});
+    // _socket.onConnectError((err) => {print("SOCKETTTTTTTTTTTTTT"), print(err)});
 
     //When an event recieved from server, data is added to the stream
     _socket.on('message', (data) {

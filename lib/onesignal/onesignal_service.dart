@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class OneSignalService {
   static OneSignal? _instance;
 
-  OneSignalSService() {
+  OneSignalService() {
     getInstance();
     _instance!.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
     _instance!.setAppId("d8bce1e1-1921-4eb5-a892-5a90f76591e0");

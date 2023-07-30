@@ -14,10 +14,10 @@ class UploadPdfGalleryPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _UploadPdfGalleryPageState createState() => _UploadPdfGalleryPageState();
+  UploadPdfGalleryPageState createState() => UploadPdfGalleryPageState();
 }
 
-class _UploadPdfGalleryPageState extends State<UploadPdfGalleryPage> {
+class UploadPdfGalleryPageState extends State<UploadPdfGalleryPage> {
   bool _loadingPath = false;
   final bool _multiPick = false;
   String? _directoryPath;
@@ -101,19 +101,6 @@ class _UploadPdfGalleryPageState extends State<UploadPdfGalleryPage> {
               Navigator.pop(context);
             },
           ),
-          // bottom: PreferredSize(
-          //   preferredSize: PreferredSize(),
-          //   child: Container(
-          //     color: whiteColor,
-          //     height: 65.0,
-          //     padding: EdgeInsets.only(
-          //       left: fixPadding * 2.0,
-          //       right: fixPadding * 2.0,
-          //       top: fixPadding,
-          //     ),
-          //     alignment: Alignment.center,
-          //   ),
-          // ),
         ),
         body: ListView.builder(
           itemCount: doctorList.length,

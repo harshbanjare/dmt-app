@@ -10,13 +10,6 @@ void main() {
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((_) async {
     await OneSignal.shared.setAppId("d8bce1e1-1921-4eb5-a892-5a90f76591e0");
-
-    //Remove this method to stop OneSignal Debugging
-    // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-    // OneSignal.shared.setAppId("d8bce1e1-1921-4eb5-a892-5a90f76591e0");
-    // OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-    //   print("Accepted permission: $accepted");
-    // });
     runApp(const MyApp());
   });
 }
@@ -28,8 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dm transport driver App',
-      home: const SplashScreen(),
       builder: EasyLoading.init(),
+      home: const SplashScreen(),
     );
   }
 }

@@ -47,10 +47,10 @@ class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
+class HomeState extends State<Home> {
   String city = 'Canada';
 
   // String city = 'Delhi,India';
@@ -62,15 +62,14 @@ class _HomeState extends State<Home> {
     {'type': 'Load Images', 'image': 'assets/icons/image_upload_icon.png'},
     {'type': 'Upload PDF', 'image': 'assets/icons/pdf_icon.png'},
     {'type': 'Email Us', 'image': 'assets/icons/email_icon.png'},
+    {'type': 'Call Us', 'image': 'assets/icons/phone_icon.png'},
   ];
 
   late Timer _timer;
 
   @override
   void initState() {
-    // TODO: implement initState
     getCountry();
-    // setUpTimedFetch();
     super.initState();
   }
 
@@ -115,26 +114,10 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-        actions: const [
-          // IconButton(
-          //   icon: Icon(
-          //     Icons.notifications,
-          //     color: blackColor,
-          //   ),
-          //   onPressed: () {
-          //     Navigator.push(
-          //         context,
-          //         PageTransition(
-          //             duration: Duration(milliseconds: 500),
-          //             type: PageTransitionType.rightToLeft,
-          //             child: Notifications()));
-          //   },
-          // ),
-        ],
       ),
       body: ListView(
         children: [
-          profile_box(),
+          profileBox(),
           heightSpace,
           heightSpace,
           doctorBySpeciality(),
@@ -145,17 +128,8 @@ class _HomeState extends State<Home> {
     );
   }
 
-  profile_box() {
+  profileBox() {
     return InkWell(
-      onTap: () {
-        // Navigator.push(
-        //     context,
-        //     PageTransition(
-        //         duration: Duration(milliseconds: 400),
-        //         type: PageTransitionType.scale,
-        //         alignment: Alignment.bottomCenter,
-        //         child: Profile()));
-      },
       child: Container(
         margin: EdgeInsets.all(fixPadding * 2.0),
         padding: EdgeInsets.all(fixPadding * 1.5),
@@ -182,8 +156,8 @@ class _HomeState extends State<Home> {
                             if (snapshot.hasData) {
                               return Text(
                                 snapshot.data != null
-                                        ? snapshot.data!.name
-                                        : '',
+                                    ? snapshot.data!.name
+                                    : '',
                                 style: whiteColorHeadingTextStyle,
                                 maxLines: 1,
                               );
@@ -318,103 +292,6 @@ class _HomeState extends State<Home> {
             style: blackHeadingTextStyle,
           ),
         ),
-        /*Container(
-          height: 190.0,
-          child: ListView.builder(
-            itemCount: doctorTypeList.length,
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              final item = doctorTypeList[index];
-              return InkWell(
-                onTap: () {
-                  if (index == 0) {
-                    // Cam Scanner
-                    // _initScanbotSdk();
-                    // _startDocumentScanning();
-
-                    _cameraToImage(context);
-
-                      // Navigator.push(context, PageTransition(
-                      //     duration: Duration(milliseconds: 800),
-                      //     type: PageTransitionType.fade,
-                      //     // child: CamScannerPage(),
-                      //     child: DocumentPreview(),
-                      //   ),
-                      // );
-
-                  } else if (index == 1) // Image From Gallery
-                  {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        duration: Duration(milliseconds: 800),
-                        type: PageTransitionType.fade,
-                        child: PickImagePage(),
-                      ),
-                    );
-                  } else if (index == 2) // PDF From Gallery
-                  {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        duration: Duration(milliseconds: 800),
-                        type: PageTransitionType.fade,
-                        child: UploadPdfGalleryPage(
-                          pdfurl: "",
-                          doctorType: 'Upload PDF From Your Device',
-                        ),
-                      ),
-                    );
-                  } else if (index == 3) {
-                    _sendingMails();
-                  }
-                },
-                child: Container(
-                  width: 180.0,
-                  padding: EdgeInsets.all(fixPadding),
-                  alignment: Alignment.center,
-                  margin: (index == doctorTypeList.length - 1)
-                      ? EdgeInsets.all(fixPadding * 2.0)
-                      : EdgeInsets.only(
-                          left: fixPadding * 2.0,
-                          top: fixPadding * 2.0,
-                          bottom: fixPadding * 2.0),
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: BorderRadius.circular(15.0),
-                    border: Border.all(width: 0.3, color: lightPrimaryColor),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        blurRadius: 1.0,
-                        spreadRadius: 1.0,
-                        color: (Colors.grey[300])!,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        item['image']!,
-                        width: 70.0,
-                        height: 70.0,
-                        fit: BoxFit.cover,
-                      ),
-                      heightSpace,
-                      Text(
-                        item['type']!,
-                        style: blackNormalBoldTextStyle,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),*/
         GridView.count(
           crossAxisCount: 2,
           childAspectRatio: 2 / 2,
@@ -427,19 +304,7 @@ class _HomeState extends State<Home> {
               .map((item) => InkWell(
                     onTap: () {
                       if (doctorTypeList.indexOf(item) == 0) {
-                        // Cam Scanner
-                        // _initScanbotSdk();
-                        // _startDocumentScanning();
-
                         _cameraToImage(context);
-
-                        // Navigator.push(context, PageTransition(
-                        //     duration: Duration(milliseconds: 800),
-                        //     type: PageTransitionType.fade,
-                        //     // child: CamScannerPage(),
-                        //     child: DocumentPreview(),
-                        //   ),
-                        // );
                       } else if (doctorTypeList.indexOf(item) ==
                           1) // Image From Gallery
                       {
@@ -467,18 +332,13 @@ class _HomeState extends State<Home> {
                         );
                       } else if (doctorTypeList.indexOf(item) == 3) {
                         _sendingMails();
+                      } else if (doctorTypeList.indexOf(item) == 4) {
+                        launchUrl(Uri.parse("tel:+18448203434"));
                       }
                     },
                     child: Container(
                       padding: EdgeInsets.all(fixPadding),
                       alignment: Alignment.center,
-                      /* margin: (doctorTypeList.indexOf(item) == doctorTypeList.length - 1)
-                ? EdgeInsets.all(fixPadding * 2.0)
-                : EdgeInsets.only(
-                left: fixPadding * 2.0,
-                right: doctorTypeList.indexOf(item)==1?fixPadding*2.0:0.0,
-                top: fixPadding * 2.0,
-                bottom: fixPadding * 2.0),*/
                       decoration: BoxDecoration(
                         color: whiteColor,
                         borderRadius: BorderRadius.circular(15.0),
@@ -519,11 +379,13 @@ class _HomeState extends State<Home> {
           child: InkWell(
             onTap: () {
               Navigator.push(
-                  context,
-                  PageTransition(
-                      duration: const Duration(milliseconds: 500),
-                      type: PageTransitionType.fade,
-                      child: const Speciality()));
+                context,
+                PageTransition(
+                  duration: const Duration(milliseconds: 500),
+                  type: PageTransitionType.fade,
+                  child: const Speciality(),
+                ),
+              );
             },
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -535,46 +397,35 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<void> _cameraToImage(BuildContext context) async {
-    // await Permission.camera.request();
-    // await Permission.photosAddOnly.request();
-    // var androidLabelsConfigs = {
-    //   ScannerConfigsAndroid.ANDROID_NEXT_BUTTON_TITLE : "Next Step",
-    //   ScannerConfigsAndroid.ANDROID_SAVE_BUTTON_TITLE: "Save It",
-    //   ScannerConfigsAndroid.ANDROID_ROTATE_LEFT_TITLE: "Turn it left",
-    //   ScannerConfigsAndroid.ANDROID_ROTATE_RIGHT_TITLE: "Turn it right",
-    //   ScannerConfigsAndroid.ANDROID_ORIGINAL_TITLE: "Original",
-    //   ScannerConfigsAndroid.ANDROID_BMW_TITLE: "B & W"
-    // }
-    try {
-      var doc = await DocumentScannerFlutter.launchForPdf(context,
-          labelsConfig: {
-            ScannerLabelsConfig.ANDROID_ORIGINAL_LABEL: "Original",
-            ScannerLabelsConfig.ANDROID_BMW_LABEL: "Clear",
-
-            ScannerLabelsConfig.PDF_GALLERY_EMPTY_TITLE: "Scan Documents",
-            ScannerLabelsConfig.ANDROID_NEXT_BUTTON_LABEL: "Crop & Next",
-            ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_SINGLE:
-                "Scan Documents",
-            ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_MULTIPLE:
-                "Scan Documents"
-            // "Only {PAGES_COUNT} Page"
-          },
-          source: ScannerFileSource.CAMERA);
-
-      if (doc != null) {
-        print(doc);
-
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => UploadPdfGalleryPage(
-                      doctorType: "Upload PDF",
-                      pdfurl: doc.path,
-                    )));
-      }
-    } catch (e) {
-      print(e);
-    }
+  void _cameraToImage(BuildContext context) {
+    var androidLabelsConfigs = {
+      ScannerLabelsConfig.ANDROID_SAVE_BUTTON_LABEL: "Save It",
+      ScannerLabelsConfig.ANDROID_ROTATE_LEFT_LABEL: "Turn it left",
+      ScannerLabelsConfig.ANDROID_ROTATE_RIGHT_LABEL: "Turn it right",
+      ScannerLabelsConfig.ANDROID_ORIGINAL_LABEL: "Original",
+      ScannerLabelsConfig.ANDROID_BMW_LABEL: "Clear",
+      ScannerLabelsConfig.PDF_GALLERY_EMPTY_TITLE: "Scan Documents",
+      ScannerLabelsConfig.ANDROID_NEXT_BUTTON_LABEL: "Crop & Next",
+      ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_SINGLE: "Scan Documents",
+      ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_MULTIPLE: "Scan Documents"
+    };
+    DocumentScannerFlutter.launchForPdf(
+      context,
+      labelsConfig: androidLabelsConfigs,
+      source: ScannerFileSource.CAMERA,
+    ).then((doc) {
+      if (doc == null) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UploadPdfGalleryPage(
+            doctorType: "Upload PDF",
+            pdfurl: doc.path,
+          ),
+        ),
+      );
+    }).onError((error, stackTrace) {
+      debugPrint(error.toString());
+    });
   }
 }

@@ -63,8 +63,10 @@ class ImageCommentPage extends StatelessWidget {
                   leading: IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Home()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Home()));
                     },
                   ),
                 ),
@@ -101,7 +103,8 @@ class ImageCommentPage extends StatelessWidget {
                         height: 100,
                         decoration: BoxDecoration(
                           color: Colors.grey[200]!.withOpacity(0.3),
-                          borderRadius: const BorderRadius.all(Radius.circular(0.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(0.0)),
                         ),
                         child: TextField(
                           style: inputLoginTextStyle,
@@ -146,7 +149,7 @@ class ImageCommentPage extends StatelessWidget {
                                   children: [
                                     ...List.generate(
                                       uploadSuccess.length,
-                                      (ind) => uploadSuccess[0]
+                                      (ind) => true || uploadSuccess[0]
                                           ? Padding(
                                               padding: const EdgeInsets.all(8),
                                               child: Text(

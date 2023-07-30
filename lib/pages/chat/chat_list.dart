@@ -15,19 +15,20 @@ class _ChatListState extends State<ChatList> {
   final chatList = [
     {
       'name': 'Chat with Admin',
-      'image': 'assets/user/user_.jpg',
+      'image': 'assets/icon.png',
       'msg': '',
       'time': '',
       'status': 'read'
     },
     {
-      'name': 'Chat with Maintainace Team',
-      'image': 'assets/user/user_.jpg',
+      'name': 'Chat with Maintenance Team',
+      'image': 'assets/icons/maintenance.png',
       'msg': '',
       'time': '',
       'status': 'read'
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

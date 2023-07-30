@@ -127,7 +127,8 @@ class _LoginState extends State<Login> {
                         padding: const EdgeInsets.only(left: 10.0),
                         decoration: BoxDecoration(
                           color: Colors.grey[200]!.withOpacity(0.3),
-                          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20.0)),
                         ),
                         child: InternationalPhoneNumberInput(
                           textStyle: inputLoginTextStyle,
@@ -141,7 +142,7 @@ class _LoginState extends State<Login> {
                           // validator: (input) =>input!.isEmpty && input!.length<10
                           //     ? "Enter a valid mobile"
                           //     : null,
-                          maxLength: 11,
+                          maxLength: 12,
                           inputBorder: InputBorder.none,
                           inputDecoration: InputDecoration(
                             contentPadding:
@@ -162,7 +163,8 @@ class _LoginState extends State<Login> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[200]!.withOpacity(0.3),
-                          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20.0)),
                         ),
                         child: TextField(
                           style: inputLoginTextStyle,

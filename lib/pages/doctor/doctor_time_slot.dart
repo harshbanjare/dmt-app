@@ -4,7 +4,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:dmt/utils/ApiHelper.dart';
 import 'package:dmt/pages/pdf/ViewPdf.dart';
 import 'package:dmt/pages/pdf/ViewImage.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:dmt/pages/util/ApiUrl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +11,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 const labelMonth = 'Month';
 const labelDate = 'Date';
 const labelWeekDay = 'Week Day';
+
+Future<List<dynamic>> getUploadedDocuments(
+  DateTime dateTime,
+  String token,
+) async {
+  debugPrint(dateTime.toString());
+  debugPrint(token);
+  String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+  Map map = await ApiBaseHelper()
+      .post("documentondate", {"date": formattedDate, "token": token});
+  if (map["status"] == true) {
+    return map['documents'];
+  } else {
+    return [];
+  }
+}
 
 class DoctorTimeSlot extends StatefulWidget {
   final String doctorName = "bkjb",
@@ -22,18 +37,20 @@ class DoctorTimeSlot extends StatefulWidget {
   const DoctorTimeSlot({super.key});
 
   @override
-  _DoctorTimeSlotState createState() => _DoctorTimeSlotState();
+  DoctorTimeSlotState createState() => DoctorTimeSlotState();
 }
 
-class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
-  late DateTime _selectedDate;
+class DoctorTimeSlotState extends State<DoctorTimeSlot> {
+  DateTime _selectedDate = DateTime.now();
   String selectedTime = '';
   late String selectedDate;
   late String monthString;
   DateTime firstDate = DateTime.now();
   DateTime lastDate = DateTime.now().add(const Duration(days: 0));
 
-  var dataList = [];
+  var selectedDateDocuments = [];
+  var documentsYesterday = [];
+
   var dataList1 = [
     {
       'name': 'Pickup Doc',
@@ -50,74 +67,51 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
     }
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    _resetSelectedDate();
-    getUploadedDocuments();
-  }
+  String token = "";
 
-  void _resetSelectedDate() {
-    DateTime now = DateTime.now();
-    _selectedDate = DateTime(now.year, now.month, now.day);
-
-    // _selectedDate = DateTime.now();
-    // _selectedDate = date
-    // var date = DateFormat('dd/MM/yyyy').format(args.value.startDate)
-    // getUploadedDocuments();
-  }
-
-  Future getUploadedDocuments() async {
-    String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
-    print(' :::::::::::::::::::: --- $formattedDate');
-
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? token = sharedPreferences.getString('token');
-
-    Map map = await ApiBaseHelper()
-        .post("documentondate", {"date": formattedDate, "token": '$token'});
-    if (map["status"] == true) {
+  Future<void> onSelectionDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2019, 01, 01),
+      lastDate: lastDate,
+    );
+    if (picked != null && picked != _selectedDate) {
       setState(() {
-        dataList = map['documents'];
+        _selectedDate = picked;
       });
-      print('NEW Request :::::::::::::::::::: --- $dataList');
-    } else {
-      setState(() {
-        dataList = [];
-      });
-      Fluttertoast.showToast(
-          msg:
-              "No recent documents on selected data uploaded on $formattedDate",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      getUploadedDocuments(_selectedDate, token).then(
+        (value) => setState(() {
+          selectedDateDocuments = value;
+        }),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    SharedPreferences.getInstance().then((sharedPreferences) {
+      setState(() {
+        token = sharedPreferences.getString('token') ?? "";
+      });
+    });
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80.0),
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AppBar(
-                backgroundColor: whiteColor,
-                elevation: 1.0,
-                automaticallyImplyLeading: false,
-                title: Text(
-                  "Uploaded Documents",
-                  style: appBarTitleTextStyle,
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AppBar(
+              backgroundColor: whiteColor,
+              elevation: 1.0,
+              automaticallyImplyLeading: false,
+              title: Text(
+                "Uploaded Documents",
+                style: appBarTitleTextStyle,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       body: Column(
@@ -160,7 +154,8 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                             margin: const EdgeInsets.only(top: 6, left: 5),
                             child: Text(
                               "${_selectedDate.toLocal()}".split(' ')[0],
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -172,37 +167,109 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
               ),
             ),
           ),
-          Expanded(
-            child: doclist(),
+          Scrollable(
+            viewportBuilder: (context, position) => Column(
+              children: [
+                DocumentList(
+                  documents: selectedDateDocuments,
+                  doctorType: widget.doctorType,
+                ),
+                (token != "")
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            DocumentsOnDate(
+                              label: "Today",
+                              date: DateTime.now(),
+                              token: token,
+                              doctorType: widget.doctorType,
+                            ),
+                            DocumentsOnDate(
+                              label: "Yesterday",
+                              date: DateTime.now()
+                                  .subtract(const Duration(days: 1)),
+                              token: token,
+                              doctorType: widget.doctorType,
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+}
 
-  Future<void> onSelectionDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: _selectedDate,
-        firstDate: DateTime(2019, 01, 01),
-        lastDate: lastDate);
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
+class DocumentsOnDate extends StatefulWidget {
+  const DocumentsOnDate(
+      {super.key,
+      required this.label,
+      required this.date,
+      required this.token,
+      required this.doctorType});
 
-      getUploadedDocuments();
-    }
+  final String label;
+  final DateTime date;
+  final String token;
+  final String doctorType;
+
+  @override
+  State<DocumentsOnDate> createState() => _DocumentsOnDateState();
+}
+
+class _DocumentsOnDateState extends State<DocumentsOnDate> {
+  var documents = [];
+
+  @override
+  void initState() {
+    getUploadedDocuments(widget.date, widget.token)
+        .then((value) => documents = value);
+    super.initState();
   }
 
-  doclist() {
-    double width = MediaQuery.of(context).size.width;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.label,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          (documents.isEmpty)
+              ? Text("No documents found for ${widget.label}")
+              : DocumentList(
+                  documents: documents, doctorType: widget.doctorType)
+        ],
+      ),
+    );
+  }
+}
+
+class DocumentList extends StatelessWidget {
+  const DocumentList(
+      {super.key, required this.documents, required this.doctorType});
+
+  final List<dynamic> documents;
+  final String doctorType;
+
+  @override
+  Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: dataList.length,
+      itemCount: documents.length,
       shrinkWrap: true,
-      // physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final item = dataList[index];
+        final item = documents[index];
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -224,7 +291,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                       ),
                       const SizedBox(height: 7.0),
                       Text(
-                        widget.doctorType,
+                        doctorType,
                         style: greyNormalTextStyle,
                       ),
                       const SizedBox(height: 7.0),
@@ -232,13 +299,10 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        // children: (('${item['document_path']}').split(',')).map((v) {
-                        // children: [2,3,4,55,6].map((v) {
                         children:
                             '${item['document_path']}'.split(',').map((v) {
                           return GestureDetector(
                               onTap: () {
-                                // var basePath = 'http://dm.ajeetwork.xyz/storage/app/public/';
                                 var basePath = ServiceUrl.img_path;
                                 var path = v
                                     .replaceAll('[', '')
@@ -248,17 +312,21 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                                     basePath + path.replaceAll('%20', '');
 
                                 Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        duration: const Duration(milliseconds: 600),
-                                        type: PageTransitionType.fade,
-                                        child: path.contains('.pdf')
-                                            ? ViewPdf(
-                                                pdfurl: basePath.replaceAll(
-                                                    '%20', ''))
-                                            : ViewImage(
-                                                pdfurl: basePath.replaceAll(
-                                                    '%20', ''))));
+                                  context,
+                                  PageTransition(
+                                    duration: const Duration(milliseconds: 600),
+                                    type: PageTransitionType.fade,
+                                    child: path.contains('.pdf')
+                                        ? ViewPdf(
+                                            pdfurl:
+                                                basePath.replaceAll('%20', ''),
+                                          )
+                                        : ViewImage(
+                                            pdfurl:
+                                                basePath.replaceAll('%20', ''),
+                                          ),
+                                  ),
+                                );
                               },
                               child: Container(
                                 width: 50.0,
@@ -296,12 +364,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                             PageTransition(
                               duration: const Duration(milliseconds: 600),
                               type: PageTransitionType.fade,
-                              child: const DoctorTimeSlot(
-                                  // doctorImage: item['image'],
-                                  // doctorName: item['name'],
-                                  // doctorType: widget.doctorType,
-                                  // experience: item['exp'],
-                                  ),
+                              child: const DoctorTimeSlot(),
                             ),
                           );
                         },
@@ -316,14 +379,19 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                 ],
               ),
             ),
-            divider(),
+            const Divider(),
           ],
         );
       },
     );
   }
+}
 
-  divider() {
+class Divider extends StatelessWidget {
+  const Divider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),

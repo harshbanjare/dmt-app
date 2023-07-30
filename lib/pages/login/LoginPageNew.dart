@@ -7,10 +7,10 @@ class LoginPageNew extends StatefulWidget {
   const LoginPageNew({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPageNew> {
+class LoginPageState extends State<LoginPageNew> {
   bool hidePassword = true;
   bool isApiCallProcess = false;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
@@ -46,8 +46,10 @@ class _LoginPageState extends State<LoginPageNew> {
               children: <Widget>[
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  margin: const EdgeInsets.symmetric(vertical: 85, horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 85, horizontal: 20),
                   child: Form(
                     key: globalFormKey,
                     child: Column(
@@ -138,32 +140,10 @@ class _LoginPageState extends State<LoginPageNew> {
                               setState(() {
                                 isApiCallProcess = true;
                               });
-                              print(
-                                  "onesignal_playerId2$osUserID");
+                              print("onesignal_playerId2$osUserID");
 
                               loginRequestModel.os_user_id =
                                   osUserID.toString();
-
-                              // APIService apiService = new APIService();
-                              //   apiService.login(loginRequestModel).then((value) {
-                              //     if (value != null) {
-                              //       setState(() {
-                              //         isApiCallProcess = false;
-                              //       });
-                              //
-                              //       if (value.token.isNotEmpty) {
-                              //         final snackBar = SnackBar(
-                              //             content: Text("Login Successful"));
-                              //         scaffoldKey.currentState!
-                              //             .showSnackBar(snackBar);
-                              //       } else {
-                              //         final snackBar =
-                              //         SnackBar(content: Text(value.error));
-                              //         scaffoldKey.currentState!
-                              //             .showSnackBar(snackBar);
-                              //       }
-                              //     }
-                              //   });
                             }
                           },
                           child: const Text(

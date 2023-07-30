@@ -22,8 +22,6 @@ class SplashScreenState extends State<SplashScreen>
   // Obtain shared preferences.
   late SharedPreferences prefs;
 
-  String? osUserID;
-
   @override
   void initState() {
     super.initState();
@@ -98,6 +96,7 @@ class SplashScreenState extends State<SplashScreen>
 
   // Write DATA
   static Future<bool> saveODUserID(value) async {
+    if (value == null) return false;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return await sharedPreferences.setString("osUserID", value);
   }

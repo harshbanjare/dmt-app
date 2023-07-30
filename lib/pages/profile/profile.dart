@@ -11,12 +11,12 @@ class Profile extends StatefulWidget {
   const Profile({super.key});
 
   @override
-  _ProfileState createState() => _ProfileState();
+  ProfileState createState() => ProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class ProfileState extends State<Profile> {
   var name = "";
-  var profilePic = "http://dm.ajeetwork.xyz/storage/app/public/";
+  var profilePic = "https://cdn-icons-png.flaticon.com/512/552/552721.png";
 
   @override
   void initState() {
@@ -74,9 +74,6 @@ class _ProfileState extends State<Profile> {
                         InkWell(
                           onTap: () {
                             clearLoginToken();
-                            // var prefs = await SharedPreferences.getInstance();
-                            // prefs.setString('token', "");
-                            // Navigator.push(context, MaterialPageRoute( builder: (context) => Login()));
                           },
                           child: Container(
                             width: (width / 3.5),
@@ -114,11 +111,17 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  clearLoginToken() async {
-    var prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', '');
-    prefs.setString('profile', '');
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+  clearLoginToken() {
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString('token', '');
+      prefs.setString('profile', '');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Login(),
+        ),
+      );
+    });
   }
 
   @override
@@ -161,31 +164,6 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 ),
-                // actions: [
-                //   Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     crossAxisAlignment: CrossAxisAlignment.end,
-                //     children: [
-                //       InkWell(
-                //         onTap: () {
-                //           Navigator.push(
-                //               context,
-                //               PageTransition(
-                //                   duration: Duration(milliseconds: 500),
-                //                   type: PageTransitionType.rightToLeft,
-                //                   child: EditProfile()));
-                //         },
-                //         child: Container(
-                //           padding: EdgeInsets.only(right: 15.0),
-                //           child: Text(
-                //             'Edit Profile',
-                //             style: primaryColorsmallBoldTextStyle,
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   )
-                // ],
               ),
             ],
           ),
@@ -193,36 +171,6 @@ class _ProfileState extends State<Profile> {
       ),
       body: ListView(
         children: [
-          // Container(
-          //   padding: EdgeInsets.all(fixPadding * 2.0),
-          // child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          // children: [
-          //   // Text(
-          //   //   'Account Info',
-          //   //   style: blackHeadingTextStyle,
-          //   // ),
-          //   heightSpace,
-          //   heightSpace,
-          //   InkWell(
-          //     onTap: () {
-          //       Navigator.push(
-          //           context,
-          //           PageTransition(
-          //               duration: Duration(milliseconds: 500),
-          //               type: PageTransitionType.rightToLeft,
-          //               child: PatientDirectory()));
-          //     },
-          //     child:
-          //         listItem(primaryColor, Icons.person, 'Patient Directory'),
-          //   ),
-          //   heightSpace,
-          //   listItem(Colors.red, Icons.assignment, 'My History'),
-          // ],
-          // ),
-          // ),
-          // divider(),
           Container(
             padding: EdgeInsets.all(fixPadding * 2.0),
             child: Column(
@@ -234,8 +182,6 @@ class _ProfileState extends State<Profile> {
                   style: blackHeadingTextStyle,
                 ),
                 heightSpace,
-                // heightSpace,
-                // listItem(Colors.orange, Icons.local_offer, 'Coupon Codes'),
                 heightSpace,
                 InkWell(
                   onTap: () {
