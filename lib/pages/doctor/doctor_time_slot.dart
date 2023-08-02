@@ -118,87 +118,84 @@ class DoctorTimeSlotState extends State<DoctorTimeSlot> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Material(
-            elevation: 1.0,
-            child: Container(
-              color: whiteColor,
-              padding: EdgeInsets.only(top: fixPadding * 2.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Select Date to see documents"),
-                      ],
-                    ),
+          Container(
+            color: whiteColor,
+            padding: EdgeInsets.only(top: fixPadding * 2.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Select Date to see documents"),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: fixPadding * 2.0,
-                        vertical: fixPadding * 1.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(Icons.date_range, size: 26.0, color: greyColor),
-                        GestureDetector(
-                          onTap: () {
-                            onSelectionDate(context);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 6, left: 5),
-                            child: Text(
-                              "${_selectedDate.toLocal()}".split(' ')[0],
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: fixPadding * 2.0, vertical: fixPadding * 1.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(Icons.date_range, size: 26.0, color: greyColor),
+                      GestureDetector(
+                        onTap: () {
+                          onSelectionDate(context);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 6, left: 5),
+                          child: Text(
+                            "${_selectedDate.toLocal()}".split(' ')[0],
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  heightSpace,
-                ],
-              ),
+                ),
+                heightSpace,
+              ],
             ),
           ),
-          Scrollable(
-            viewportBuilder: (context, position) => Column(
-              children: [
-                DocumentList(
-                  documents: selectedDateDocuments,
-                  doctorType: widget.doctorType,
-                ),
-                (token != "")
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            DocumentsOnDate(
-                              label: "Today",
-                              date: DateTime.now(),
-                              token: token,
-                              doctorType: widget.doctorType,
-                            ),
-                            DocumentsOnDate(
-                              label: "Yesterday",
-                              date: DateTime.now()
-                                  .subtract(const Duration(days: 1)),
-                              token: token,
-                              doctorType: widget.doctorType,
-                            ),
-                          ],
-                        ),
-                      )
-                    : const SizedBox(),
-              ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  DocumentList(
+                    documents: selectedDateDocuments,
+                    doctorType: widget.doctorType,
+                  ),
+                  (token != "")
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              DocumentsOnDate(
+                                label: "Today",
+                                date: DateTime.now(),
+                                token: token,
+                                doctorType: widget.doctorType,
+                              ),
+                              DocumentsOnDate(
+                                label: "Yesterday",
+                                date: DateTime.now()
+                                    .subtract(const Duration(days: 1)),
+                                token: token,
+                                doctorType: widget.doctorType,
+                              ),
+                            ],
+                          ),
+                        )
+                      : const SizedBox(),
+                ],
+              ),
             ),
           ),
         ],

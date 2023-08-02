@@ -40,7 +40,7 @@ _sendingMails() async {
     path: 'custom@dmtransport.ca',
     query: 'subject=Any Query&body=Hello Sir', //add subject and body here
   );
-  if (!await launch(params.toString())) throw 'Could not launch $params';
+  if (!await launchUrl(params)) throw 'Could not launch $params';
 }
 
 class Home extends StatefulWidget {
@@ -63,9 +63,8 @@ class HomeState extends State<Home> {
     {'type': 'Upload PDF', 'image': 'assets/icons/pdf_icon.png'},
     {'type': 'Email Us', 'image': 'assets/icons/email_icon.png'},
     {'type': 'Call Us', 'image': 'assets/icons/phone_icon.png'},
+    {'type': 'Help', 'image': 'assets/icons/help_icon.png'},
   ];
-
-  late Timer _timer;
 
   @override
   void initState() {
@@ -334,6 +333,14 @@ class HomeState extends State<Home> {
                         _sendingMails();
                       } else if (doctorTypeList.indexOf(item) == 4) {
                         launchUrl(Uri.parse("tel:+18448203434"));
+                      } else if (doctorTypeList.indexOf(item) == 5) {
+                        final Uri params = Uri(
+                          scheme: 'mailto',
+                          path: 'info@dmtransport.ca',
+                          query:
+                              'subject=Any Query&body=Hello Sir', //add subject and body here
+                        );
+                        launchUrl(params);
                       }
                     },
                     child: Container(
