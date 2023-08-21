@@ -170,7 +170,7 @@ class DoctorTimeSlotState extends State<DoctorTimeSlot> {
                     documents: selectedDateDocuments,
                     doctorType: widget.doctorType,
                   ),
-                  (token != "")
+                  (selectedDateDocuments.isEmpty && token != "")
                       ? Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -246,7 +246,9 @@ class _DocumentsOnDateState extends State<DocumentsOnDate> {
           (documents.isEmpty)
               ? Text("No documents found for ${widget.label}")
               : DocumentList(
-                  documents: documents, doctorType: widget.doctorType)
+                  documents: documents,
+                  doctorType: widget.doctorType,
+                )
         ],
       ),
     );
@@ -262,124 +264,14 @@ class DocumentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: documents.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        final item = documents[index];
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          //ViewPdf
-          children: [
-            Container(
-              padding: EdgeInsets.all(fixPadding * 2.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${item['category']}',
-                        style: blackNormalBoldTextStyle,
-                      ),
-                      const SizedBox(height: 7.0),
-                      Text(
-                        doctorType,
-                        style: greyNormalTextStyle,
-                      ),
-                      const SizedBox(height: 7.0),
-                      const SizedBox(height: 7.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children:
-                            '${item['document_path']}'.split(',').map((v) {
-                          return GestureDetector(
-                              onTap: () {
-                                var basePath = ServiceUrl.img_path;
-                                var path = v
-                                    .replaceAll('[', '')
-                                    .replaceAll(']', '')
-                                    .toString();
-                                basePath =
-                                    basePath + path.replaceAll('%20', '');
-
-                                Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    duration: const Duration(milliseconds: 600),
-                                    type: PageTransitionType.fade,
-                                    child: path.contains('.pdf')
-                                        ? ViewPdf(
-                                            pdfurl:
-                                                basePath.replaceAll('%20', ''),
-                                          )
-                                        : ViewImage(
-                                            pdfurl:
-                                                basePath.replaceAll('%20', ''),
-                                          ),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                width: 50.0,
-                                height: 50.0,
-                                margin: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                      blurRadius: 1.0,
-                                      spreadRadius: 1.0,
-                                      color: (Colors.grey[300])!,
-                                    ),
-                                  ],
-                                  image: const DecorationImage(
-                                    image:
-                                        AssetImage('assets/icons/pdficon.png'),
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ),
-                              ));
-                        }).toList(),
-                      ),
-                    ],
-                  ),
-                  heightSpace,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              duration: const Duration(milliseconds: 600),
-                              type: PageTransitionType.fade,
-                              child: const DoctorTimeSlot(),
-                            ),
-                          );
-                        },
-                        child: Container(),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-          ],
-        );
-      },
+    return Column(
+      children: List.generate(
+        documents.length,
+        (index) => Document(
+          item: documents[index],
+          doctorType: doctorType,
+        ),
+      ),
     );
   }
 }
@@ -394,6 +286,100 @@ class Divider extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
       height: 0.8,
       color: greyColor.withOpacity(0.3),
+    );
+  }
+}
+
+class Document extends StatelessWidget {
+  const Document({super.key, required this.item, required this.doctorType});
+
+  final Map item;
+  final String doctorType;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      //ViewPdf
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${item['category']}',
+                    style: blackNormalBoldTextStyle,
+                  ),
+                  const SizedBox(height: 7.0),
+                  Text(
+                    doctorType,
+                    style: greyNormalTextStyle,
+                  ),
+                  const SizedBox(height: 7.0),
+                  const SizedBox(height: 7.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: '${item['document_path']}'.split(',').map((v) {
+                      return GestureDetector(
+                          onTap: () {
+                            var basePath = ServiceUrl.img_path;
+                            var path = v
+                                .replaceAll('[', '')
+                                .replaceAll(']', '')
+                                .toString();
+                            basePath = basePath + path.replaceAll('%20', '');
+
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                duration: const Duration(milliseconds: 600),
+                                type: PageTransitionType.fade,
+                                child: path.contains('.pdf')
+                                    ? ViewPdf(
+                                        pdfurl: basePath.replaceAll('%20', ''),
+                                      )
+                                    : ViewImage(
+                                        pdfurl: basePath.replaceAll('%20', ''),
+                                      ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 50.0,
+                            height: 50.0,
+                            margin: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              color: whiteColor,
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                  blurRadius: 1.0,
+                                  spreadRadius: 1.0,
+                                  color: (Colors.grey[300])!,
+                                ),
+                              ],
+                              image: const DecorationImage(
+                                image: AssetImage('assets/icons/pdficon.png'),
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ));
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const Divider(),
+      ],
     );
   }
 }

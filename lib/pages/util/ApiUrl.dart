@@ -1,6 +1,6 @@
 class ServiceUrl {
   // static const baseUrl = 'http://dm.ajeetwork.xyz/';
-  static const baseUrl = 'https://dmtransport.ca/app/';
+  static const baseUrl = 'https://dmtransport.in/';
 
   static const loginApi = '${baseUrl}api/login';
 
@@ -10,6 +10,4 @@ class ServiceUrl {
 
   // static const img_path = 'http://dmtransport.ca/app/storage/files/';
   // static const img_path = 'http://dmtransport.ca/app/storage/files/';
-
-
 }

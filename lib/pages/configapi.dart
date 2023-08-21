@@ -8,8 +8,20 @@ Future<DriverData> fetchDriverData() async {
   print('config_token ${token!}');
   print('config_token $token');
 
-  Map<String, dynamic> map =
-      await ApiBaseHelper().post("user", {"token": token});
+  var rData = await ApiBaseHelper().post("user", {"token": token});
+
+  if (rData == null) {
+    return const DriverData(
+      id: -1,
+      name: "",
+      mobile: "",
+      email: "",
+      user_type: "",
+      profile_pic: "",
+      sdk_key: "",
+    );
+  }
+  Map<String, dynamic> map = rData as Map<String, dynamic>;
 
   if (map["status"] != null && !map["status"]) {
     return const DriverData(

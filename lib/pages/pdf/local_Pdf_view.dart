@@ -53,10 +53,12 @@ class _LocalPdfViewPageState extends State<LocalPdfViewPage> {
     var type = widget.type.toString();
     print(' :::::::::::::::::::: --- $pdfurl');
     Navigator.push(
-        context,
-        PageTransition(
-            duration: const Duration(milliseconds: 600),
-            type: PageTransitionType.fade,
-            child: ImageCommentPage(imageFiles: [File(pdfurl)], type: type)));
+      context,
+      PageTransition(
+        duration: const Duration(milliseconds: 600),
+        type: PageTransitionType.fade,
+        child: ImageCommentPage(imageFiles: [File(pdfurl)], type: type),
+      ),
+    );
   }
 }

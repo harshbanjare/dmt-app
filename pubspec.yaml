@@ -58,6 +58,7 @@ dependencies:
   advance_pdf_viewer: 2.0.1
   open_file: ^3.2.1
   syncfusion_flutter_pdfviewer: ^22.1.39
+  syncfusion_flutter_pdf: ^22.2.7
   file_picker: ^5.3.2
   pdf_viewer_plugin: ^2.0.1
   syncfusion_flutter_datepicker: ^22.1.39
@@ -65,7 +66,10 @@ dependencies:
   #  pdf_compressor: ^0.2.0
   #  opencv_4: ^1.0.0
   pdf: ^3.8.0
-  document_scanner_flutter: ^0.2.7
+  document_scanner_flutter:
+    git:
+      url: https://github.com/shivang51/document_scanner_flutter
+      ref: master
   launch_review: ^3.0.1
   #chat
   socket_io_client: ^2.0.2
@@ -85,6 +89,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: "^0.13.1"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

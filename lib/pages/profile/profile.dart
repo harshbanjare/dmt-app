@@ -211,6 +211,13 @@ class ProfileState extends State<Profile> {
                   },
                   child: listItem(Colors.red, Icons.help_outline, 'Help'),
                 ),
+                heightSpace,
+                InkWell(
+                  onTap: () {
+                    launchUrl(Uri.parse("tel:+18448203434"));
+                  },
+                  child: listItem(Colors.blue, Icons.call, 'Call Us'),
+                ),
               ],
             ),
           ),

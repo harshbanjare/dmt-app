@@ -39,7 +39,7 @@ class _DownloadingDialogState extends State<DownloadingDialog> {
         }
         newPath = "$newPath/DMTransport";
         directory = Directory(newPath);
-        String url = "https://dmtransport.ca/app/storage/docs/${widget.url}";
+        String url = "https://dmtransport.in/storage/docs/${widget.url}";
         String fileName = widget.url;
 
         String savePath = "${directory.path}/$fileName";

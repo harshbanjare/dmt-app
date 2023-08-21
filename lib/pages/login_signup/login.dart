@@ -74,7 +74,9 @@ class LoginState extends State<Login> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/truck.jpeg'), fit: BoxFit.cover),
+          image: AssetImage('assets/truck.jpeg'),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Stack(
         children: <Widget>[
@@ -144,7 +146,11 @@ class LoginState extends State<Login> {
                             fontWeight: FontWeight.w500,
                           ),
                           initialValue: number,
-                          maxLength: (country == "IN") ? 11 : 10,
+                          maxLength: (country == "IN")
+                              ? 11
+                              : (country == "CA")
+                                  ? 12
+                                  : 10,
                           inputBorder: InputBorder.none,
                           inputDecoration: InputDecoration(
                             contentPadding:
@@ -193,7 +199,8 @@ class LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(30.0),
                         onTap: () {
                           String mobile = _phoneController.text.toString();
-                          mobile = mobile.replaceAll(' ', '');
+                          mobile =
+                              mobile.replaceAll(' ', '').replaceAll('-', "");
 
                           sendLoginRequest(
                               context,

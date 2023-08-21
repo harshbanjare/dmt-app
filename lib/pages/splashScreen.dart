@@ -78,7 +78,7 @@ class SplashScreenState extends State<SplashScreen>
     // Store it into shared prefs, So that later we can use it.
     saveODUserID(osUserID);
 
-    print("player_id$osUserID");
+    debugPrint("player_id$osUserID");
     // Fluttertoast.showToast(
     //     msg: osUserID.toString() ?? "",
     //     toastLength: Toast.LENGTH_SHORT,
@@ -142,10 +142,12 @@ class SplashScreenState extends State<SplashScreen>
       (value) {
         var token = (value.getString('token') ?? "");
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    token.length > 10 ? const BottomBar() : const Login()));
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                token.length > 10 ? const BottomBar() : const Login(),
+          ),
+        );
       },
     );
     // print('login_token ' + token);

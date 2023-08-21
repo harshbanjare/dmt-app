@@ -1,18 +1,21 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:dmt/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:dmt/pages/screens.dart';
 import 'package:dmt/utils/ApiHelper.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:path/path.dart' as dart_path;
 
 class ImageCommentPage extends StatelessWidget {
   ImageCommentPage({super.key, required this.imageFiles, required this.type});
 
   final List<File> imageFiles;
   final String type;
-  bool isLoading = false;
 
   static const _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -20,8 +23,39 @@ class ImageCommentPage extends StatelessWidget {
 
   final TextEditingController textController = TextEditingController();
 
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+  String getRandomString(int length) => String.fromCharCodes(
+        Iterable.generate(
+          length,
+          (_) => _chars.codeUnitAt(
+            _rnd.nextInt(_chars.length),
+          ),
+        ),
+      );
+
+  Future<String> _convertToPdf(List<File> images) async {
+    final PdfDocument document = PdfDocument();
+    for (var image in images) {
+      final Uint8List imageData = image.readAsBytesSync();
+      //Load the image using PdfBitmap.
+      final PdfBitmap rawImage = PdfBitmap(imageData);
+      //Draw the image to the PDF page.
+      document.pages.add().graphics.drawImage(
+            rawImage,
+            Rect.fromLTWH(
+              0,
+              0,
+              rawImage.width as double,
+              rawImage.height as double,
+            ),
+          );
+    }
+
+    // Save the document.
+    var tempDir = await getTemporaryDirectory();
+    var savePath = dart_path.join(tempDir.path, "dmt_scanned_doc.pdf");
+    var savedFile = await File(savePath).writeAsBytes(await document.save());
+    return savedFile.path;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +159,7 @@ class ImageCommentPage extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30.0),
-                        onTap: () async {
-                          List<bool> uploadSuccess = [];
-
+                        onTap: () {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
                             return const Scaffold(
@@ -135,62 +167,58 @@ class ImageCommentPage extends StatelessWidget {
                             );
                           }));
 
-                          for (File file in imageFiles) {
-                            uploadSuccess.add(await uploadImage(context, file));
-                          }
-
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return Scaffold(
-                              body: Center(
-                                child: SafeArea(
-                                    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ...List.generate(
-                                      uploadSuccess.length,
-                                      (ind) => true || uploadSuccess[0]
-                                          ? Padding(
+                          _convertToPdf(imageFiles).then(
+                            (pdfFilePath) =>
+                                uploadImage(context, File(pdfFilePath)).then(
+                              (value) => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return Scaffold(
+                                      body: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
                                               padding: const EdgeInsets.all(8),
                                               child: Text(
-                                                "Image ${ind + 1} Upload Success",
-                                                style: const TextStyle(
+                                                value
+                                                    ? "File Upload Success"
+                                                    : "File Upload Failed",
+                                                style: TextStyle(
                                                   fontSize: 16,
-                                                  color: Colors.green,
-                                                ),
-                                              ),
-                                            )
-                                          : Padding(
-                                              padding: const EdgeInsets.all(8),
-                                              child: Text(
-                                                "Image ${ind + 1} Upload Failed",
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.red,
+                                                  color: value
+                                                      ? Colors.green
+                                                      : Colors.red,
                                                 ),
                                               ),
                                             ),
-                                    ),
-                                    ElevatedButton(
-                                      child: const Text("Continue"),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        Navigator.push(
-                                          context,
-                                          PageTransition(
-                                              duration: const Duration(
-                                                milliseconds: 600,
-                                              ),
-                                              type: PageTransitionType.fade,
-                                              child: const BottomBar()),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                )),
+                                            ElevatedButton(
+                                              child: const Text("Continue"),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                                Navigator.push(
+                                                  context,
+                                                  PageTransition(
+                                                    duration: const Duration(
+                                                      milliseconds: 600,
+                                                    ),
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    child: const BottomBar(),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                            );
-                          }));
+                            ),
+                          );
                         },
                         child: Container(
                           height: 50.0,

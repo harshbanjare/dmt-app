@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:document_scanner_flutter/configs/configs.dart';
 import 'package:document_scanner_flutter/document_scanner_flutter.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +63,6 @@ class HomeState extends State<Home> {
     {'type': 'Upload PDF', 'image': 'assets/icons/pdf_icon.png'},
     {'type': 'Email Us', 'image': 'assets/icons/email_icon.png'},
     {'type': 'Call Us', 'image': 'assets/icons/phone_icon.png'},
-    {'type': 'Help', 'image': 'assets/icons/help_icon.png'},
   ];
 
   @override
@@ -83,6 +82,38 @@ class HomeState extends State<Home> {
       } else {
         city = "USA";
       }
+    });
+  }
+
+  void _scanImages(BuildContext context) {
+    var androidLabelsConfigs = {
+      ScannerLabelsConfig.ANDROID_SAVE_BUTTON_LABEL: "Save It",
+      ScannerLabelsConfig.ANDROID_ROTATE_LEFT_LABEL: "Turn it left",
+      ScannerLabelsConfig.ANDROID_ROTATE_RIGHT_LABEL: "Turn it right",
+      ScannerLabelsConfig.ANDROID_ORIGINAL_LABEL: "Original",
+      ScannerLabelsConfig.ANDROID_BMW_LABEL: "Clear",
+      ScannerLabelsConfig.PDF_GALLERY_EMPTY_TITLE: "Scan Documents",
+      ScannerLabelsConfig.ANDROID_NEXT_BUTTON_LABEL: "Crop & Next",
+      ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_SINGLE: "Scan Documents",
+      ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_MULTIPLE: "Scan Documents"
+    };
+    DocumentScannerFlutter.launchForPdf(
+      context,
+      labelsConfig: androidLabelsConfigs,
+      source: ScannerFileSource.CAMERA,
+    ).then((doc) {
+      if (doc == null) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UploadPdfGalleryPage(
+            doctorType: "Upload PDF",
+            pdfurl: doc.path,
+          ),
+        ),
+      );
+    }).onError((error, stackTrace) {
+      debugPrint(error.toString());
     });
   }
 
@@ -128,129 +159,125 @@ class HomeState extends State<Home> {
   }
 
   profileBox() {
-    return InkWell(
-      child: Container(
-        margin: EdgeInsets.all(fixPadding * 2.0),
-        padding: EdgeInsets.all(fixPadding * 1.5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.blueAccent,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            widthSpace,
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FutureBuilder<DriverData>(
-                          future: futureAlbum,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Text(
-                                snapshot.data != null
-                                    ? snapshot.data!.name
-                                    : '',
-                                style: whiteColorHeadingTextStyle,
-                                maxLines: 1,
-                              );
-                            } else if (snapshot.hasError) {
-                              return Text(
-                                '',
-                                style: whiteColorHeadingTextStyle,
-                                maxLines: 1,
-                              );
-                            }
-                            // By default, show a loading spinner.
-                            return const CircularProgressIndicator();
-                          }),
-                      const SizedBox(height: 5.0),
-                      FutureBuilder<DriverData>(
-                          future: futureAlbum,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              profileImg = ServiceUrl.img_path +
-                                  (snapshot.data != null
-                                      ? snapshot.data!.profile_pic
-                                      : '');
-                              return Text(
-                                (snapshot.data != null
-                                    ? snapshot.data!.mobile
-                                    : ''),
-                                style: whiteColorHeadingTextStyle,
-                              );
-                            } else if (snapshot.hasError) {
-                              return Text(
-                                '',
-                                // (snapshot.error != null?'${snapshot.error}':''),
-                                style: whiteColorHeadingTextStyle,
-                              );
-                            }
-                            // By default, show a loading spinner.
-                            return const CircularProgressIndicator();
-                          }),
-                      const SizedBox(height: 5.0),
-                    ],
-                  ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [],
-                  ),
-                ],
-              ),
+    return Container(
+      margin: EdgeInsets.all(fixPadding * 2.0),
+      padding: EdgeInsets.all(fixPadding * 1.5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        color: Colors.blueAccent,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          widthSpace,
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FutureBuilder<DriverData>(
+                      future: futureAlbum,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Text(
+                            snapshot.data != null ? snapshot.data!.name : '',
+                            style: whiteColorHeadingTextStyle,
+                            maxLines: 1,
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(
+                            '',
+                            style: whiteColorHeadingTextStyle,
+                            maxLines: 1,
+                          );
+                        }
+                        // By default, show a loading spinner.
+                        return const CircularProgressIndicator();
+                      },
+                    ),
+                    const SizedBox(height: 5.0),
+                    FutureBuilder<DriverData>(
+                      future: futureAlbum,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          profileImg = ServiceUrl.img_path +
+                              (snapshot.data != null
+                                  ? snapshot.data!.profile_pic
+                                  : '');
+                          return Text(
+                            (snapshot.data != null
+                                ? snapshot.data!.mobile
+                                : ''),
+                            style: whiteColorHeadingTextStyle,
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(
+                            '',
+                            // (snapshot.error != null?'${snapshot.error}':''),
+                            style: whiteColorHeadingTextStyle,
+                          );
+                        }
+                        // By default, show a loading spinner.
+                        return const CircularProgressIndicator();
+                      },
+                    ),
+                    const SizedBox(height: 5.0),
+                  ],
+                ),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [],
+                ),
+              ],
             ),
-            FutureBuilder<DriverData>(
-                future: futureAlbum,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    profileImg = ServiceUrl.img_path +
-                        (snapshot.data != null
-                            ? snapshot.data!.profile_pic
-                            : '');
+          ),
+          FutureBuilder<DriverData>(
+              future: futureAlbum,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  profileImg = ServiceUrl.img_path +
+                      (snapshot.data != null ? snapshot.data!.profile_pic : '');
 
-                    return Container(
-                      width: 60.0,
-                      height: 60.0,
-                      // margin: EdgeInsets.only(top:50),
+                  return Container(
+                    width: 60.0,
+                    height: 60.0,
+                    // margin: EdgeInsets.only(top:50),
 
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.0),
-                        border: Border.all(width: 0.2, color: greyColor),
-                        image: DecorationImage(
-                          image: NetworkImage(profileImg),
-                          //profilePic
-                          fit: BoxFit.cover,
-                        ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      border: Border.all(width: 0.2, color: greyColor),
+                      image: DecorationImage(
+                        image: NetworkImage(profileImg),
+                        //profilePic
+                        fit: BoxFit.cover,
                       ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Container(
-                      width: 60.0,
-                      height: 60.0,
-                      // margin: EdgeInsets.only(top:50),
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Container(
+                    width: 60.0,
+                    height: 60.0,
+                    // margin: EdgeInsets.only(top:50),
 
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.0),
-                        border: Border.all(width: 0.2, color: greyColor),
-                        image: const DecorationImage(
-                          image: NetworkImage("profileImg"),
-                          //profilePic
-                          fit: BoxFit.cover,
-                        ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      border: Border.all(width: 0.2, color: greyColor),
+                      image: const DecorationImage(
+                        image: NetworkImage("profileImg"),
+                        //profilePic
+                        fit: BoxFit.cover,
                       ),
-                    );
-                  }
-                  // By default, show a loading spinner.
-                  return const CircularProgressIndicator();
-                }),
-          ],
-        ),
+                    ),
+                  );
+                }
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              }),
+        ],
       ),
     );
   }
@@ -300,10 +327,10 @@ class HomeState extends State<Home> {
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           children: doctorTypeList
-              .map((item) => InkWell(
+              .map((item) => GestureDetector(
                     onTap: () {
                       if (doctorTypeList.indexOf(item) == 0) {
-                        _cameraToImage(context);
+                        _scanImages(context);
                       } else if (doctorTypeList.indexOf(item) ==
                           1) // Image From Gallery
                       {
@@ -333,14 +360,6 @@ class HomeState extends State<Home> {
                         _sendingMails();
                       } else if (doctorTypeList.indexOf(item) == 4) {
                         launchUrl(Uri.parse("tel:+18448203434"));
-                      } else if (doctorTypeList.indexOf(item) == 5) {
-                        final Uri params = Uri(
-                          scheme: 'mailto',
-                          path: 'info@dmtransport.ca',
-                          query:
-                              'subject=Any Query&body=Hello Sir', //add subject and body here
-                        );
-                        launchUrl(params);
                       }
                     },
                     child: Container(
@@ -402,37 +421,5 @@ class HomeState extends State<Home> {
         ),
       ],
     );
-  }
-
-  void _cameraToImage(BuildContext context) {
-    var androidLabelsConfigs = {
-      ScannerLabelsConfig.ANDROID_SAVE_BUTTON_LABEL: "Save It",
-      ScannerLabelsConfig.ANDROID_ROTATE_LEFT_LABEL: "Turn it left",
-      ScannerLabelsConfig.ANDROID_ROTATE_RIGHT_LABEL: "Turn it right",
-      ScannerLabelsConfig.ANDROID_ORIGINAL_LABEL: "Original",
-      ScannerLabelsConfig.ANDROID_BMW_LABEL: "Clear",
-      ScannerLabelsConfig.PDF_GALLERY_EMPTY_TITLE: "Scan Documents",
-      ScannerLabelsConfig.ANDROID_NEXT_BUTTON_LABEL: "Crop & Next",
-      ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_SINGLE: "Scan Documents",
-      ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_MULTIPLE: "Scan Documents"
-    };
-    DocumentScannerFlutter.launchForPdf(
-      context,
-      labelsConfig: androidLabelsConfigs,
-      source: ScannerFileSource.CAMERA,
-    ).then((doc) {
-      if (doc == null) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => UploadPdfGalleryPage(
-            doctorType: "Upload PDF",
-            pdfurl: doc.path,
-          ),
-        ),
-      );
-    }).onError((error, stackTrace) {
-      debugPrint(error.toString());
-    });
   }
 }

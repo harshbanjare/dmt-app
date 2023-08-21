@@ -16,7 +16,6 @@ class UploadImages extends StatefulWidget {
 class _ImagesListState extends State<UploadImages> {
   late PickedFile _imageFile;
   final String uploadUrl = 'https://api.imgur.com/3/upload';
-  final ImagePicker _picker = ImagePicker();
 
   Future<String?> uploadImage(filepath, url) async {
     var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -37,34 +36,6 @@ class _ImagesListState extends State<UploadImages> {
     // } else {
     //   print('Retrieve error ' + response.exception!.code);
     // }
-  }
-
-  Widget _previewImage() {
-    if (_imageFile != null) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Image.file(File(_imageFile.path)),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                var res = await uploadImage(_imageFile.path, uploadUrl);
-                print(res);
-              },
-              child: const Text('Upload'),
-            )
-          ],
-        ),
-      );
-    } else {
-      return const Text(
-        'You have not yet picked an image.',
-        textAlign: TextAlign.center,
-      );
-    }
   }
 
   void _pickImage() async {

@@ -16,8 +16,8 @@ class _OpenPDFState extends State<OpenPDF> {
 
   loadDocument() async {
     document = await PDFDocument.fromURL(
-        // "https://dmtransport.ca/app/storage/docs/e56659fefb776e64aaa7a8fa92ec6ffa.pdf"
-        "https://dmtransport.ca/app/storage/docs/${widget.file}");
+        // "https://dmtransport.in/storage/docs/e56659fefb776e64aaa7a8fa92ec6ffa.pdf"
+        "https://dmtransport.in/storage/docs/${widget.file}");
 
     setState(() => _isLoading = false);
   }

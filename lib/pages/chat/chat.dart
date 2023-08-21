@@ -16,10 +16,10 @@ class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key, required this.name, required this.conversionType})
       : super(key: key);
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  ChatScreenState createState() => ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class ChatScreenState extends State<ChatScreen> {
   late Timer timer;
   final msgController = TextEditingController();
 
@@ -27,10 +27,13 @@ class _ChatScreenState extends State<ChatScreen> {
   var chatApiService = ChatApiService();
   var messageChatList = <Messages>[];
 
+  bool loading = false;
+
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    loading = true;
     _getMessages();
     _callGetMessageApiPeriodically();
   }
@@ -38,15 +41,18 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void dispose() {
     super.dispose();
+    timer.cancel();
+    timer.cancel();
     _scrollController.dispose();
     msgController.dispose();
-    timer.cancel();
   }
 
   void _scrollToBottom() {
     if (_scrollController.hasClients) {
-      _scrollController.animateTo(0.0,
-          duration: const Duration(milliseconds: 300), curve: Curves.elasticOut);
+      // comment by me
+      // _scrollController.animateTo(0.0,
+      //     duration: const Duration(milliseconds: 300),
+      //     curve: Curves.elasticOut);
     } else {
       Timer(const Duration(milliseconds: 400), () => _scrollToBottom());
     }
@@ -246,7 +252,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                                     .start,
                                                             children: [
                                                               Image.network(
-                                                                "https://dmtransport.ca/app/storage/docs/${item.doc}",
+                                                                "https://dmtransport.in/storage/docs/${item.doc}",
                                                                 height: 250,
                                                                 width: 250,
                                                               ),
@@ -320,7 +326,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         heightSpace,
                         Text(
-                          'No Messages',
+                          loading ? "Loading..." : 'No Messages',
                           style: greyNormalTextStyle,
                         ),
                       ],
@@ -404,18 +410,17 @@ class _ChatScreenState extends State<ChatScreen> {
                           var token = (prefs.getString('token') ?? "");
 
                           if (file == null) {
-                            chatApiService.sendMessage({
+                            await chatApiService.sendMessage({
                               "message": msgController.text.toString(),
-                              "token": token ?? '',
+                              "token": token,
                               "coversation_type": widget.conversionType,
                             });
                           } else {
-                            print("object");
-                            chatApiService.sendMessage({
+                            await chatApiService.sendMessage({
                               "message": msgController.text != ''
                                   ? msgController.text.toString()
                                   : ".",
-                              "token": token ?? '',
+                              "token": token,
                               "coversation_type": widget.conversionType,
                               "doc": file.path
                             });
@@ -425,11 +430,13 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() {
                             msgController.text = '';
                             file = null;
-                            _scrollController.animateTo(
-                              0.0,
-                              curve: Curves.easeOut,
-                              duration: const Duration(milliseconds: 300),
-                            );
+                            if (_scrollController.hasClients) {
+                              _scrollController.animateTo(
+                                0.0,
+                                curve: Curves.easeOut,
+                                duration: const Duration(milliseconds: 300),
+                              );
+                            }
                           });
                         }
                       },
@@ -460,21 +467,22 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _getMessages() async {
     var prefs = await SharedPreferences.getInstance();
-    var token =
-        (prefs.getString('token') ?? "");
+    var token = (prefs.getString('token') ?? "");
     var chatBean = await chatApiService.getMessages(
-        {"token": token ?? '', "coversation_type": widget.conversionType});
+        {"token": token, "coversation_type": widget.conversionType});
+
     setState(() {
       messageChatList.clear();
       for (int i = chatBean.messages!.length - 1; i >= 0; i--) {
         var message = chatBean.messages![i];
         messageChatList.add(message);
       }
+      loading = false;
     });
   }
 
   void _callGetMessageApiPeriodically() {
-    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       _getMessages();
     });
   }

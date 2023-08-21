@@ -266,7 +266,7 @@ class UploadPdfGalleryPageState extends State<UploadPdfGalleryPage> {
     if (!mounted) return;
     setState(() {
       _loadingPath = false;
-      print(_paths!.first.extension);
+      // print(_paths!.first.extension);
       _fileName =
           _paths != null ? _paths!.map((e) => e.name).toString() : '...';
       String filePath = _paths!.single.path!;
@@ -277,10 +277,12 @@ class UploadPdfGalleryPageState extends State<UploadPdfGalleryPage> {
 
   void _viewFileExplorer(uploadType, filePath) async {
     Navigator.push(
-        context,
-        PageTransition(
-            duration: const Duration(milliseconds: 600),
-            type: PageTransitionType.fade,
-            child: LocalPdfViewPage(pdfurl: filePath, type: uploadType)));
+      context,
+      PageTransition(
+        duration: const Duration(milliseconds: 600),
+        type: PageTransitionType.fade,
+        child: LocalPdfViewPage(pdfurl: filePath, type: uploadType),
+      ),
+    );
   }
 }

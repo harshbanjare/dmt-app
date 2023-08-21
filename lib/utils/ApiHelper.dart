@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dmt/pages/util/ApiUrl.dart';
@@ -40,14 +41,13 @@ class ApiBaseHelper {
 
   Future<dynamic> get(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token =
-        (prefs.getString('token') ?? "");
+    var token = (prefs.getString('token') ?? "");
     var kHeader = {
       "Authorization": "Bearer $token",
       "Content-Type": "application/x-www-form-urlencoded",
     };
-    print("HEADERS::::::::: $kHeader");
-    print("Url $baseUrl$url");
+    debugPrint("HEADERS::::::::: $kHeader");
+    debugPrint("Url $baseUrl$url");
 
     var responseJson;
     try {
@@ -69,16 +69,15 @@ class ApiBaseHelper {
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token =
-        (prefs.getString('token') ?? "");
-    print('login_token $token');
+    var token = (prefs.getString('token') ?? "");
+    debugPrint('login_token $token');
 
     var kHeader = {
       "Authorization": "Bearer $token",
       "Content-Type": "application/x-www-form-urlencoded",
     };
-    print("HEADERS::::::::: $kHeader");
-    print("Url $baseUrl$url");
+    debugPrint("HEADERS::::::::: $kHeader");
+    debugPrint("Url $baseUrl$url");
     try {
       final response = await http.post(Uri.parse(baseUrl + url),
           body: params, headers: kHeader);
@@ -86,36 +85,35 @@ class ApiBaseHelper {
       try {
         return jsonDecode(response.body);
       } on FormatException catch (e) {
-        print('error ${e.toString()}');
+        debugPrint('error ${e.toString()}');
       }
     } on SocketException {
-      print('error api error.................');
+      debugPrint('error api error.................');
     }
-    print('error after webcall.................');
+    debugPrint('error after webcall.................');
   }
 
   Future<dynamic> multiPart(
       url, params, String filePath, String mediaName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token =
-        (prefs.getString('token') ?? "");
-    print('login_token $token');
+    var token = (prefs.getString('token') ?? "");
+    debugPrint('login_token $token');
     var kHeaderMultiPart = {
       "Authorization": "Bearer $token",
       "Content-Type": "multipart/form-data",
       // "Content-Type": "multipart/form-data;boundary=alamofire.boundary.bd5f22f730a6c10d"
     };
-    print("HEADERS::::::::: $kHeaderMultiPart");
+    debugPrint("HEADERS::::::::: $kHeaderMultiPart");
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('connected');
+        debugPrint('connected');
       }
     } on SocketException catch (_) {
       return {"status": false};
     }
 
-    print("\n\n\n${Uri.parse(baseUrl + url)}\n\n\n\n");
+    debugPrint("\n\n\n${Uri.parse(baseUrl + url)}\n\n\n\n");
 
     final multipartRequest =
         http.MultipartRequest('POST', Uri.parse(baseUrl + url));
@@ -125,23 +123,23 @@ class ApiBaseHelper {
     multipartRequest.files.add(pic);
     try {
       final response = await multipartRequest.send();
-      print("error after response.........$response");
+      debugPrint("error after response.........$response");
       try {
         var responseByteArray = await response.stream.toBytes();
-        print('error1111 ${utf8.decode(responseByteArray)}');
+        debugPrint('error1111 ${utf8.decode(responseByteArray)}');
         return json.decode(utf8.decode(responseByteArray));
       } on FormatException catch (e) {
         var err = e.toString();
         err.split('<').map((i) {
-          print(i.toString());
+          debugPrint(i.toString());
         });
 
-        print('error11 ${e.toString()}');
+        debugPrint('error11 ${e.toString()}');
         return {"status": false};
       }
     } on SocketException {
       //throw FetchDataException('No Internet connection');
-      print('error api error.................');
+      debugPrint('error api error.................');
       return {"status": false};
     }
   }
@@ -157,7 +155,7 @@ class ApiBaseHelper {
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body.toString());
-        // print("ERROR::"+response.body.toString());
+        // debugPrint("ERROR::"+response.body.toString());
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());
@@ -167,7 +165,7 @@ class ApiBaseHelper {
       case 500:
       default:
         throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+            'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
     }
   }
 }
